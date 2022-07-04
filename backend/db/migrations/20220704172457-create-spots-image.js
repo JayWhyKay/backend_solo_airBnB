@@ -9,10 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       spotid: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Spot,
+          key: id
+        }
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

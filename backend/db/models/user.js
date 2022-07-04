@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     toSafeObject() {
-      const { id, username, email } = this; //context will be the User instance
-      return { id, username, email }
+      const { id, email } = this; //context will be the User instance
+      return { id, email }
     }
 
     validatePassword(password) {
@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
+      User.hasMany(models.Spot, { foreignKey: ownerId }),
+
     }
 
     static getCurrentUserById(id) {
@@ -27,13 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async login ({ credential, password }) {
-      const { Op } = require('sequelize');
+      // const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
-          [Op.or]: {
-            username: credential,
+          // [Op.or]: {
+            // username: credential,
             email: credential
-          }
+          // }
         }
       });
       if(user && user.validatePassword(password)) {
@@ -41,10 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
-        username,
+        firstName,
+        lastName,
         email,
         hashedPassword
       });
@@ -52,11 +55,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [4, 30],
+        len: [1, 30],
+        isNotEmail(value) {
+          if (Validator.isEmail(value)) {
+            throw new Error('Cannot be an email.');
+          }
+        }
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1, 30],
         isNotEmail(value) {
           if (Validator.isEmail(value)) {
             throw new Error('Cannot be an email.');
@@ -67,8 +82,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
-        len: [3,256]
+        len: [3,256],
+        isEmail: true
       }
     },
     hashedPassword: {
