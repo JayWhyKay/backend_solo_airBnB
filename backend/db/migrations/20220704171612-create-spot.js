@@ -1,7 +1,5 @@
 'use strict';
-
-const { UPSERT } = require("sequelize/types/query-types");
-
+// const { Model } = require('sequelize');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Spots', {
@@ -15,8 +13,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: User,
-          key: id
+          model: "Users",
+          key: "id"
         }
       },
       address: {
