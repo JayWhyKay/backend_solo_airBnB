@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      User.hasMany(models.Spot, { foreignKey: ownerId }),
+      User.hasMany(models.Spot, { foreignKey: "ownerId" })
+      User.hasMany(models.Booking, { foreignKey: "userId" })
+      User.hasMany(models.Review, { foreignKey: "userId" })
 
     }
 
@@ -29,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async login ({ credential, password }) {
-      // const { Op } = require('sequelize');
+      const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
-          // [Op.or]: {
+          [Op.or]: {
             // username: credential,
             email: credential
-          // }
+          }
         }
       });
       if(user && user.validatePassword(password)) {
