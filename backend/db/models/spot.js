@@ -71,6 +71,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    scopes: {
+      review: {
+        attributes: { exclude: ["createdAt", "updatedAt"] }
+      }
+    }
   });
   return Spot;
 };
