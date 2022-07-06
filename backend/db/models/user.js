@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       return { id, email }
     }
 
-    validatePassword(password) {
-      return bcrypt.compareSync(password, this.hashedPassword.toString());
+    validatePassword( password ) {
+      return bcrypt.compareSync( password, this.hashedPassword.toString());
     }
 
     static associate(models) {
@@ -107,7 +107,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     scopes: {
       currentUser: {
-        attributes: { exclude: ["hashedPassword"] }
+        attributes: { exclude: ["hashedPassword", "createdAt", "updatedAt"] }
       },
       loginUser: {
         attributes: {}

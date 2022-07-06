@@ -18,6 +18,22 @@ const validateLogin = [  //checks to see whether or not req.body.credential and 
     handleValidationErrors
 ];
 
+const validateEmail = async (req, res, next) => {
+    const { credential } = req.body
+    const exists = await User.findOne({
+        where: {
+            email: credential
+        }
+    });
+    if(!exists) return next()
+
+    const err = new Error("User already exists");
+    err.errors = {"email": "User with that email already exists", "statuscode": 403 } ;
+    err.status = 403;
+    return next(err);
+}
+
+
 const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
@@ -46,7 +62,7 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-router.post( '/sign-up', validateSignup, async (req, res) => {
+router.post( '/sign-up', validateEmail, validateSignup, async (req, res) => {
     const { firstName, lastName, email, password} = req.body;
 
     const user = await User.signup({ firstName, lastName, email, password });
@@ -69,9 +85,9 @@ router.post( '/', validateLogin, async (req, res, next) => {
         return next(err);
     };
 
-    await setTokenCookie(res, user);
+    const token = await setTokenCookie(res, user);
 
-    return res.json({ user });
+    return res.json({ user, token });
 });
 
 // Log out
@@ -81,12 +97,20 @@ router.delete( '/', (_req, res) => {
 });
 
 // Restore session user
-router.get( '/', restoreUser, (req, res) => {
+router.get( '/', restoreUser, async (req, res) => {
     const { user } = req;
     if (user) {
-        return res.json({
-            user: user.toSafeObject()
-        });
+        const token = await setTokenCookie(res, user);
+        currentUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            token
+        }
+        return res.json(
+            currentUser
+        );
     } else return res.json({});
 });
 
