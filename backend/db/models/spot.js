@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.belongsTo(models.User, { foreignKey: "ownerId", as: "Owner" })
-      Spot.hasMany(models.Booking, { foreignKey: "spotId" })
-      Spot.hasMany(models.Review, { foreignKey: "spotId" })
-      Spot.hasMany(models.SpotsImage, { foreignKey: "spotId" })
+      Spot.belongsTo(models.User, { foreignKey: "ownerId", as: "Owner" });
+      Spot.hasMany(models.Booking, { foreignKey: "spotId" });
+      Spot.hasMany(models.Review, { foreignKey: "spotId" });
+      Spot.hasMany(models.SpotsImage, { foreignKey: "spotId" });
     }
   }
   Spot.init({
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [1, 50]
@@ -67,12 +67,6 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    numReviews: {
-      type: DataTypes.INTEGER,
-    },
-    avgStarRating: {
-      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

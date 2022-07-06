@@ -44,7 +44,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING(50)
-
       },
       description: {
         type: Sequelize.STRING,
@@ -54,19 +53,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      numReviews: {
-        type: Sequelize.INTEGER
-      },
-      avgStarRating: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     });
   },
