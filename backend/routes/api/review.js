@@ -8,19 +8,16 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateListing = async (req, res, next) => {
-    const exists = await Spot.findOne({
-        where: {
-            id: req.params.spotId
-        }
-    });
+    const exists = await Review.findByPk(req.params.reviewId);
+
     if(exists) return next()
 
-    const err = new Error("Spot could not be found");
+    const err = new Error("Review couldn't be found");
     err.status = 404;
     return next(err);
-}
+};
 const validateDuplicate = async (req, res, next) => {
-    const exists = await Review.findOne({
+    const exists = await Review.findAll({
         where: {
             userId: req.user.id
         }
@@ -30,29 +27,24 @@ const validateDuplicate = async (req, res, next) => {
     const err = new Error("User already has a review for this spot");
     err.status = 403;
     return next(err);
-}
+};
 
 const validateAuthorization = async (req, res, next) => {
-    const exists = await Review.findOne({
-        where: {
-            spotId: req.params.spotId
-        }
-    });
+    const exists = await Review.findByPk(req.params.reviewId)
+
     if(exists.userId == req.user.id) return next()
+
 
     const err = new Error("Forbidden");
     err.status = 403;
     return next(err);
-}
+};
+
 const validateReview = [
     check('review')
         .exists({ checkFalsy: true })
         .isLength({ min: 1 })
         .withMessage('Review text is required'),
-    check('stars')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 1 })
-        .withMessage("Stars must be an integer from 1 to 5"),
     check("stars")
         .isInt({ min: 1, max: 5 })
         .withMessage("Stars must be an integer from 1 to 5"),
@@ -60,7 +52,7 @@ const validateReview = [
 ];
 
 
-router.get("/", requireAuth, async(req,res) => {
+router.get("/myreviews", requireAuth, async(req,res) => {
     const Reviews = await Review.findAll({
         where: {
             userId: req.user.id
@@ -73,9 +65,9 @@ router.get("/", requireAuth, async(req,res) => {
     res.json({Reviews})
 });
 
-router.get("/:spotId", validateListing, async(req,res) => {
+router.get("/listings/:spotId", validateListing, async(req,res) => {
     const spotId = req.params
-    const Reviews = await Review.findOne({
+    const Reviews = await Review.findAll({
         where: spotId,
         include: [
             { model: User.scope('defaultScope') },
@@ -85,7 +77,7 @@ router.get("/:spotId", validateListing, async(req,res) => {
     res.json({Reviews});
 });
 
-router.post("/:spotId", requireAuth, validateListing, validateDuplicate, validateReview, async(req,res) => {
+router.post("/listings/:spotId", requireAuth, validateDuplicate, validateReview, async(req,res) => {
 
     const spot = await Spot.findOne({where: {id: req.params.spotId}})
 
@@ -99,16 +91,24 @@ router.post("/:spotId", requireAuth, validateListing, validateDuplicate, validat
     res.json(newReview);
 });
 
-router.patch("/:spotId/:reviewId", requireAuth, validateAuthorization, validateListing, validateReview, async(req,res) => {
+router.patch("/:reviewId", requireAuth, validateAuthorization, validateReview, validateListing, async(req,res) => {
     const { review, stars } = req.body
-    const spot = await Spot.findOne({where: {id: req.params.spotId}})
-    const Review = await Review.findOne({where: {id: req.params.reviewId}})
-    const updateReview = await Review.update({
+    console.log(req.params)
+    const reviewUpdate = await Review.findByPk(req.params.reviewId)
+    await reviewUpdate.update({
         review,
         stars
     });
-    res.json(updateReview);
+    res.json(reviewUpdate);
 });
 
+router.delete("/:reviewId", requireAuth, validateAuthorization, validateListing, async (req,res) => {
+    const review = await Review.findByPk(req.params.reviewId);
+    await review.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
+});
 
 module.exports = router;
