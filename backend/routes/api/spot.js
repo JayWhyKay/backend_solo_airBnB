@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { Spot, SpotsImage, User } = require('../../db/models');
+const { Spot, SpotsImage, User, Review, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -26,12 +26,15 @@ const validateSpot = [
         .withMessage('Country is required.'),
     check('lat')
         .exists()
+        .isFloat({ min: -90, max:  90})
         .withMessage('Latitude is not valid'),
     check('lng')
         .exists()
+        .isFloat({min:-180, max:180})
         .withMessage('Longitude is not valid'),
     check('name')
-        .exists()
+        .exists({ checkFalsy: true })
+        .withMessage('Name must be less than 50 characters')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
@@ -66,13 +69,32 @@ router.get('/myspots', requireAuth, async (req, res) => {
 
 
 router.get('/:id', validateListing, async (req, res) => {
-    const listings = await Spot.findByPk(req.params.id, {
-        include: [
-            { model:SpotsImage },
-            { model:User, as: "Owner" }
+    const allReviews = await Review.count({ where:{spotId: req.params.id} })
+    const avgReviews = allReviews.length
+    console.log(allReviews)
+
+    // const listing = await Spot.findByPk(req.params.id,
+
+    //     {include: [{ model: Review,
+    //         attributes: [
+    //         [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
+    //         [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating']
+    //     ]},
+    //         { model: SpotsImage, as: "images", attributes: ["url"] },
+    //         { model: User, as: "Owner" }
+    //     ]
+    // })
+    const listing = await Spot.findByPk(req.params.id, {
+        include: {
+            model: Review,
+            attributes: []
+        },
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
         ]
     })
-    res.json(listings)
+    res.json({listing})
 });
 
 router.get('/', async (req, res) => {
