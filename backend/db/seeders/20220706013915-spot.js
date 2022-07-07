@@ -23,29 +23,29 @@ module.exports = {
       name: "my Crib",
       description: "beautiful place to rent for someone",
       price: 155
+    },
+    { ownerId: 2,
+      address: "123 asdfe st",
+      city: "Burbank",
+      state: "California",
+      country: "USA",
+      lat: 35,
+      lng: 120,
+      name: "my doub Crib",
+      description: "beautiful place to rent for someone",
+      price: 1355
+    },
+    { ownerId: 2,
+      address: "123 asasddf st",
+      city: "Los Angeles",
+      state: "California",
+      country: "USA",
+      lat: 66,
+      lng: 110,
+      name: "my Crib",
+      description: "beautiful place to rent for someone",
+      price: 66
     }
-    // { ownerId: 1,
-    //   address: "123 asdfe st",
-    //   city: "Burbank",
-    //   state: "California",
-    //   country: "USA",
-    //   lat: 35,
-    //   lng: 120,
-    //   name: "my doub Crib",
-    //   description: "beautiful place to rent for someone",
-    //   price: 1355
-    // },
-    // { ownerId: 2,
-    //   address: "123 asasddf st",
-    //   city: "Los Angeles",
-    //   state: "California",
-    //   country: "USA",
-    //   lat: 66,
-    //   lng: 110,
-    //   name: "my Crib",
-    //   description: "beautiful place to rent for someone",
-    //   price: 66
-    // }
     ], {});
   },
 
