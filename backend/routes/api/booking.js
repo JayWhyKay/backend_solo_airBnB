@@ -2,10 +2,10 @@ const express = require('express')
 const { Op } = require('sequelize')
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, Review, Booking, ReviewImage, SpotsImage } = require('../../db/models');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-const { up } = require('../../db/seeders/20220707145227-booking');
+const { User, Spot, Booking, SpotsImage } = require('../../db/models');
+// const { check } = require('express-validator');
+// const { handleValidationErrors } = require('../../utils/validation');
+// const { up } = require('../../db/seeders/20220707145227-booking');
 
 const router = express.Router();
 
@@ -79,12 +79,35 @@ const validateParams = async (req, res, next) => {
     let date = new Date().toISOString().slice(0, 10)
     let today = parseInt(date.split("-").join(""))
 
-    console.log(reqStart, today, end)
 
-    if( (today < end) && (reqStart > today) ) return next()
+    if(today < end) {
+        if(reqStart < today){
+            const err = new Error("Please provide a valid date");
+            err.status = 400;
+            return next(err);
+        }
+        return next()
+    }
 
 
     const err = new Error("Past bookings can't be modified");
+    err.status = 400;
+    return next(err);
+};
+
+const validateStart = async (req, res, next) => {
+    const exists = await Booking.findByPk(req.params.bookingId)
+
+    const start = parseInt(exists.startDate.split('-').join(''))
+    let date = new Date().toISOString().slice(0, 10)
+    let today = parseInt(date.split("-").join(""))
+
+    // console.log(reqStart, today, end)
+
+    if(today < start) return next()
+
+
+    const err = new Error("Bookings that have been started can't be deleted");
     err.status = 400;
     return next(err);
 };
@@ -148,8 +171,19 @@ router.patch('/mybookings/:bookingId', requireAuth, validateBooking, validateAut
             endDate
         });
         res.json(updateBooking);
+});
 
-})
+router.delete('/mybookings/:bookingId', requireAuth, validateBooking, validateAuthorization, validateStart,
+    async (req, res) => {
+        const deleteRes = await Booking.findByPk(req.params.bookingId)
+        deleted = await deleteRes.destroy()
+
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        })
+    }
+);
 
 
 
