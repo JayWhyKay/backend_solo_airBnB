@@ -17,12 +17,14 @@ const validateListing = async (req, res, next) => {
     return next(err);
 };
 const validateDuplicate = async (req, res, next) => {
-    const exists = await Review.findAll({
+    const allReviews = await Review.findAll({
         where: {
             userId: req.user.id
         }
     });
-    if(!exists) return next()
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(spot.user == allReviews.userId) return next()
 
     const err = new Error("User already has a review for this spot");
     err.status = 403;
@@ -92,7 +94,7 @@ router.post("/listings/:spotId", requireAuth, validateDuplicate, validateReview,
 
 router.patch("/:reviewId", requireAuth, validateAuthorization, validateReview, validateListing, async(req,res) => {
     const { review, stars } = req.body
-    
+
     const reviewUpdate = await Review.findByPk(req.params.reviewId)
     await reviewUpdate.update({
         review,
