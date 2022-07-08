@@ -74,26 +74,62 @@ router.get('/myspots', requireAuth, async (req, res) => {
 
 router.get('/:id', validateListing, async (req, res) => {
 
-    const listing = await Spot.findByPk(req.params.id,
-        {include: [
-            { model: SpotsImage, as: "images", attributes: ["url"] },
-            { model: User, as: "Owner" }
-        ]
-    })
-    const average = await Spot.findByPk(req.params.id, {
-        include: {
-            model: Review,
-            attributes: []
-        },
+    // const listing = await Spot.findByPk(req.params.id,
+    //     {include: [
+    //         { model: SpotsImage, as: "images", attributes: ["url"] },
+    //         { model: User, as: "Owner" }
+    //     ]
+    // })
+    // const average = await Spot.findByPk(req.params.id, {
+    //     include: {
+    //         model: Review,
+    //         attributes: []
+    //     },
+    //     attributes: [
+    //         [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
+    //         [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
+    //     ]
+    // })
+    const listing = await Spot.findByPk(req.params.id);
+    const numReviews = await Review.count({where: {spotId: req.params.id}})
+    const rating = await Review.findAll({
+        where: { spotId: req.params.id },
         attributes: [
-            [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
             [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
         ]
-    })
-    listing.numReviews = average.numReviews
-    listing.avgStarRating = average.avgStarRating
+    });
+    const images = await SpotsImage.findAll({
+        where: { spotId: req.params.id },
+        attributes:["url"]
+    });
+    const Owner = await User.findByPk(listing.ownerId, {
+        attributes:["id", "firstName", "lastName"]
+    });
+    console.log(rating)
+    listing.numReviews = numReviews
+    listing.avgStarRating = rating
 
-    res.json(listing)
+    const result = {
+        id: listing.id,
+        ownerId: listing.ownerId,
+        address: listing.address,
+        city: listing.city,
+        state: listing.state,
+        country: listing.country,
+        lat: listing.lat,
+        lng: listing.lng,
+        name: listing.name,
+        description: listing.description,
+        price: listing.price,
+        createdAt: listing.createdAt,
+        updatedAt: listing.updatedAt,
+        numReviews: numReviews,
+        avgStarRating: rating,
+        images: images,
+        Owner: Owner
+    }
+
+    res.json(result)
 });
 
 router.get('/', async (req, res) => {
