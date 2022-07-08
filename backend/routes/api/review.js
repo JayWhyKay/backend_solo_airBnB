@@ -8,7 +8,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateListing = async (req, res, next) => {
-    const exists = await Review.findByPk(req.params.reviewId);
+    const exists = await Review.findByPk(req.params.spotId);
 
     if(exists) return next()
 
@@ -31,7 +31,7 @@ const validateDuplicate = async (req, res, next) => {
             userId: req.user.id
         }
     });
-    
+
     const exist = allReviews.filter(review => {
         if(review.spotId == req.params.spotId) return review
     })
