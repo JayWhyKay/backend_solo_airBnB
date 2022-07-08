@@ -158,13 +158,10 @@ router.get("/listings/:spotId", requireAuth, validateListing, async(req, res) =>
     const owner = spot.ownerId
 
     if(owner == req.user.id){
-        const Bookings = await Booking.findAll({
-            where: {
-                spotId: req.params.spotId
-            },
+        const bookings = await Booking.findAll({ where: { spotId: req.params.spotId },
             include: [{model: User.scope('defaultScope'), as: "User"}]
         })
-        res.json({Bookings})
+        res.json({Bookings:bookings})
     }
 
     const Bookings = await Booking.findAll({
