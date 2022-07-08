@@ -13,11 +13,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   SpotsImage.init({
-    spotid: DataTypes.INTEGER,
+    spotId: DataTypes.INTEGER,
     url: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'SpotsImage',
+    scopes: {
+      preview: {
+        attributes: { exclude: ["url","spotId","createdAt", "updatedAt"] }
+      },
+      create: {
+        attributes: { exclude: ["createdAt", "updatedAt"] }
+      }
+    }
   });
   return SpotsImage;
 };

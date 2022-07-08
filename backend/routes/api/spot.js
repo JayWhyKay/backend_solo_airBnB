@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { Spot, SpotsImage, User } = require('../../db/models');
+const { Spot, SpotsImage, User, Review, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -26,12 +26,15 @@ const validateSpot = [
         .withMessage('Country is required.'),
     check('lat')
         .exists()
+        .isFloat({ min: -90, max:  90})
         .withMessage('Latitude is not valid'),
     check('lng')
         .exists()
+        .isFloat({min:-180, max:180})
         .withMessage('Longitude is not valid'),
     check('name')
-        .exists()
+        .exists({ checkFalsy: true })
+        .withMessage('Name must be less than 50 characters')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
@@ -43,55 +46,67 @@ const validateSpot = [
     handleValidationErrors
 ];
 const validateListing = async (req, res, next) => {
-    const exists = await Spot.findOne({
-        where: {
-            id: req.params.id
-        }
-    });
+    const exists = await Spot.findByPk(req.params.id);
     if(exists) return next()
 
     const err = new Error("Spot could not be found");
-    // err.error = { "message": "Spot couldn't be found", "statuscode": 404 } ;
     err.status = 404;
     return next(err);
 }
+const validateAuthorization = async (req, res, next) => {
+    const exists = await Spot.findByPk(req.params.id)
+
+    if(exists.ownerId == req.user.id) return next()
+
+
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+};
 
 router.get('/myspots', requireAuth, async (req, res) => {
     const { user } = req
-    const Spots = await Spot.findAll( {
+    const spots = await Spot.findAll( {
         where: { ownerId: user.id }
     });
-    res.json({ Spots })
+    res.json({ Spots: spots })
 });
 
 
 router.get('/:id', validateListing, async (req, res) => {
-    const listings = await Spot.findByPk(req.params.id, {
-        include: [
-            { model:SpotsImage },
-            { model:User, as: "Owner" }
+
+    const listing = await Spot.findByPk(req.params.id,
+        {include: [
+            { model: SpotsImage, as: "images", attributes: ["url"] },
+            { model: User, as: "Owner" }
         ]
     })
-    res.json(listings)
+    const average = await Spot.findByPk(req.params.id, {
+        include: {
+            model: Review,
+            attributes: []
+        },
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
+        ]
+    })
+    listing.numReviews = average.numReviews
+    listing.avgStarRating = average.avgStarRating
+
+    res.json(listing)
 });
 
 router.get('/', async (req, res) => {
     const listings = await Spot.findAll({
+        attributes: {exclude: ["numReviews", "avgStarRating"]},
         include: [{
-            model: SpotsImage,
-            attributes: ['url']
+            model: SpotsImage, as: "previewImage",
+            attributes: ['url'],
+            limit: 1
         }]
     })
-    for(let listing of listings) {
-        if(listing.SpotsImage) {
-            let previewImg = listing.SpotsImage[0].url
-            console.log(previewImg)
-            delete listing.dataValues.SpotsImage
-            listing.dataValues['previewImage'] = previewImg
-        }
-    }
-    console.log(listings)
-    res.json({listings})
+    res.json({Spots: listings})
 });
 
 router.post('/', requireAuth, validateSpot, async (req, res) => {
@@ -110,10 +125,11 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
         description,
         price
     });
+    res.statusCode = 201
     res.json(listings)
 });
 
-router.patch('/:id', requireAuth, validateListing, validateSpot, async (req, res) => {
+router.patch('/:id', requireAuth, validateListing, validateSpot, validateAuthorization, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price }
         = req.body;
     const listing = await Spot.findByPk(req.params.id)
@@ -131,13 +147,14 @@ router.patch('/:id', requireAuth, validateListing, validateSpot, async (req, res
     res.json(listing)
 });
 
-router.delete("/:id", requireAuth, validateListing, async(req, res) => {
+router.delete("/:id", requireAuth, validateListing, validateAuthorization, async(req, res) => {
     const listing = await Spot.findByPk(req.params.id)
+
     await listing.destroy()
     res.json({
-            "message": "Successfully deleted",
-            "statusCode": 200
-        })
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
 });
 
 

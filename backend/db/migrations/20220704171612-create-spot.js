@@ -15,7 +15,8 @@ module.exports = {
         references: {
           model: "Users",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE"
       },
       address: {
         type: Sequelize.STRING,
@@ -35,11 +36,11 @@ module.exports = {
         allowNull: false
       },
       lat: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
       },
       lng: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
       },
       name: {
@@ -62,7 +63,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
-      }
+      },
+      numReviews: {
+        type: Sequelize.INTEGER,
+      },
+      avgStarRating: {
+        type: Sequelize.INTEGER,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

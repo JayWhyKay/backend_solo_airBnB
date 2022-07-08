@@ -20,6 +20,15 @@ module.exports = {
       },
       { spotId: 2,
         url: "www.234.kr"
+      },
+      { spotId: 2,
+        url: "www.wer.cd"
+      },
+      { spotId: 3,
+        url: "www.123.ca"
+      },
+      { spotId: 3,
+        url: "www.234.kr"
       }
       ], {});
   },

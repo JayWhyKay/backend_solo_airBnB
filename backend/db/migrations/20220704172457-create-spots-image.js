@@ -8,13 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      spotid: {
+      spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "Spots",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE"
       },
       url: {
         type: Sequelize.STRING,

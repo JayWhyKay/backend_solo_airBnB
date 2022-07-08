@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(models.User, { foreignKey: "ownerId", as: "Owner" });
       Spot.hasMany(models.Booking, { foreignKey: "spotId" });
       Spot.hasMany(models.Review, { foreignKey: "spotId" });
-      Spot.hasMany(models.SpotsImage, { foreignKey: "spotId" });
+      Spot.hasMany(models.SpotsImage, { foreignKey: "spotId", as: "previewImage" });
+      Spot.hasMany(models.SpotsImage, { foreignKey: "spotId", as: "images" });
     }
   }
   Spot.init({
@@ -38,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         min: -90,
@@ -46,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         min: -180,
@@ -67,6 +68,12 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    numReviews: {
+      type: DataTypes.INTEGER,
+    },
+    avgStarRating: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
