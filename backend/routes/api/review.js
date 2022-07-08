@@ -22,9 +22,8 @@ const validateDuplicate = async (req, res, next) => {
             userId: req.user.id
         }
     });
-    const spot = await Spot.findByPk(req.params.spotId)
 
-    if(spot.id !== allReviews.spotId) return next()
+    if(req.params.spotId == allReviews.spotId) return next()
 
     const err = new Error("User already has a review for this spot");
     err.status = 403;
