@@ -42,15 +42,8 @@ const validateDuplicate = async (req, res, next) => {
     const exist = reservations.filter(reso => {
         if((reso.spotId == parseInt(req.params.spotId))) return reso
     })
-    console.log(exist)
     if(!exist) return next()
 
-    // const existStart = reservations.filter(reso => {
-    //     ((reso.startDate == req.body.startDate) || (parseInt(reso.startDate) < parseInt(req.body.startDate) < parseInt(reso.endDate)))
-    // })
-    // console.log(existStart)
-    // const existEnd = resos.filter(reso => { reso.endDate == req.params.endDate })
-    // console.log(resos)
     const err = new Error("Sorry, this spot is already booked for the specified dates");
     err.status = 403;
     err.errors = {
