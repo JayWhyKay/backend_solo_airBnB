@@ -547,7 +547,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /reviews
+  * URL: /reviews/myreviews
   * Body: none
 
 * Successful Response
@@ -599,7 +599,7 @@ Returns all the reviews that belong to a spot specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /reviews/:spotId
+  * URL: /reviews/listings/:spotId
   * Body: none
 
 * Successful Response
@@ -652,7 +652,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /reviews/:spotId
+  * URL: /reviews/listings/:spotId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -733,7 +733,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PATCH
-  * URL: /reviews/:spotId/:reviewId
+  * URL: /reviews/myreviews/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -801,7 +801,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/:spotId/:reviewId
+  * URL: /reviews/myreviews/:reviewId
   * Body: none
 
 * Successful Response
@@ -837,7 +837,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /bookings
+  * URL: /bookings/mybookings
   * Body: none
 
 * Successful Response
@@ -882,7 +882,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /bookings/:spotId
+  * URL: /bookings/listings/:spotId
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -951,7 +951,7 @@ Create and return a new booking from a spot specified by id.
 * Require proper authorization: Spot must NOT belong to the current user
 * Request
   * Method: POST
-  * URL: /bookings/:spotId
+  * URL: /bookings/listings/:spotId
   * Body: none
 
 * Successful Response
@@ -1010,7 +1010,7 @@ Update and return an existing booking.
 * Require proper authorization: Booking must belong to the current user
 * Request
   * Method: PATCH
-  * URL: /bookings/:spotId/:id
+  * URL: /bookings/mybookings/:bookingId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1092,7 +1092,7 @@ Delete an existing booking.
   Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /bookings/:spotId/:id
+  * URL: /bookings/mybookings/:bookingId
   * Body: none
 
 * Successful Response
@@ -1142,7 +1142,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL: /images/listings/:id
+  * URL: /images/listings/add/:spotId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1189,7 +1189,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * URL: /images/reviews/:id
+  * URL: /images/reviews/add/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
