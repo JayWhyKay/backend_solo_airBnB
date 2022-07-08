@@ -80,18 +80,18 @@ router.get('/:id', validateListing, async (req, res) => {
             { model: User, as: "Owner" }
         ]
     })
-    const average = await Spot.findByPk(req.params.id, {
-        include: {
-            model: Review,
-            attributes: []
-        },
-        attributes: [
-            [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
-            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
-        ]
-    })
-    listing.numReviews = average.numReviews
-    listing.avgStarRating = average.avgStarRating
+    // const average = await Spot.findByPk(req.params.id, {
+    //     include: {
+    //         model: Review,
+    //         attributes: []
+    //     },
+    //     attributes: [
+    //         [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
+    //         [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
+    //     ]
+    // })
+    // listing.numReviews = average.numReviews
+    // listing.avgStarRating = average.avgStarRating
 
     res.json(listing)
 });
