@@ -154,14 +154,17 @@ router.get("/mybookings", requireAuth, async(req, res) => {
 });
 
 router.get("/listings/:spotId", requireAuth, validateListing, async(req, res) => {
+    const requestUser = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId)
-    const owner = spot.ownerId
 
-    if(owner == req.user.id){
-        const bookings = await Booking.findAll({ where: { spotId: req.params.spotId },
+    if(spot.ownerId == req.user.id){
+        const Bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.spotId
+            },
             include: [{model: User.scope('defaultScope'), as: "User"}]
         })
-        res.json({Bookings:bookings})
+        res.json({Bookings})
     }
 
     const Bookings = await Booking.findAll({
