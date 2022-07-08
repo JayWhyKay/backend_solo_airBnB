@@ -58,7 +58,6 @@ const validateAuthorization = async (req, res, next) => {
 
     if(exists.ownerId == req.user.id) return next()
 
-
     const err = new Error("Forbidden");
     err.status = 403;
     return next(err);

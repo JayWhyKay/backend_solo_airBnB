@@ -34,7 +34,6 @@ const validateAuthorization = async (req, res, next) => {
 
     if(exists.userId == req.user.id) return next()
 
-
     const err = new Error("Forbidden");
     err.status = 403;
     return next(err);
@@ -67,19 +66,19 @@ router.get("/myreviews", requireAuth, async(req,res) => {
 
 router.get("/listings/:spotId", validateListing, async(req,res) => {
     const spotId = req.params
-    const Reviews = await Review.findAll({
+    const reviews = await Review.findAll({
         where: spotId,
         include: [
             { model: User.scope('defaultScope') },
             { model: ReviewImage, as: "images" , attributes: ["url"] }
         ]
     });
-    res.json({Reviews});
+    res.json({Reviews: reviews});
 });
 
 router.post("/listings/:spotId", requireAuth, validateDuplicate, validateReview, async(req,res) => {
 
-    const spot = await Spot.findOne({where: {id: req.params.spotId}})
+    const spot = await Spot.findByPk(req.params.spotId)
 
     const { review, stars } = req.body
     const newReview = await Review.create({
@@ -93,7 +92,7 @@ router.post("/listings/:spotId", requireAuth, validateDuplicate, validateReview,
 
 router.patch("/:reviewId", requireAuth, validateAuthorization, validateReview, validateListing, async(req,res) => {
     const { review, stars } = req.body
-    console.log(req.params)
+    
     const reviewUpdate = await Review.findByPk(req.params.reviewId)
     await reviewUpdate.update({
         review,
