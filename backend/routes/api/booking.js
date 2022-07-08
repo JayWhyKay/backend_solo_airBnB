@@ -29,28 +29,52 @@ const validateBooking = async (req, res, next) => {
     return next(err);
 };
 
-const validateDuplicate = async (req, res, next) => {
-    const reservations = await Booking.findAll({
-        where: {
-            [Op.or]: [
-                { startDate: {[Op.between]: [req.body.startDate, req.body.endDate]}},
-                { endDate: {[Op.between]: [req.body.startDate, req.body.endDate]}}
-            ]
-        }
-    });
+// const validateDuplicate = async (req, res, next) => {
+//     const reservations = await Booking.findAll({
+//         where: {
+//             [Op.or]: [
+//                 { startDate: {[Op.between]: [req.body.startDate, req.body.endDate]}},
+//                 { endDate: {[Op.between]: [req.body.startDate, req.body.endDate]}}
+//             ]
+//         }
+//     });
 
-    const exist = reservations.filter(reso => {
-        if((reso.spotId == parseInt(req.params.spotId))) return reso
-    })
-    if(!exist) return next()
+//     const exist = reservations.filter(reso => {
+//         if((reso.spotId == parseInt(req.params.spotId))) return reso
+//     })
+//     if(!exist) return next()
+
+//     const err = new Error("Sorry, this spot is already booked for the specified dates");
+//     err.status = 403;
+//     err.errors = {
+//         "startDate": "Start date conflicts with an existing booking",
+//         "endDate": "End date conflicts with an existing booking"
+//     }
+//     return next(err);
+// };
+
+const validResDate = async (req, _res, next) => {
+    const { startDate, endDate } = req.body;
+
+    const allBookings = await Booking.findAll({
+        where: { spotId: req.params.spotId }
+    });
 
     const err = new Error("Sorry, this spot is already booked for the specified dates");
     err.status = 403;
-    err.errors = {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
+    err.errors = {};
+
+    for(let booking of allBookings) {
+        if ((booking.startDate < endDate && booking.endDate > startDate) ||
+        (booking.startDate == startDate || booking.endDate == endDate)) {
+            err.errors = {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+            };
+            next(err);
+        }
     }
-    return next(err);
+    next();
 };
 
 const validateOwner = async (req, res, next) => {
@@ -105,7 +129,6 @@ const validateStart = async (req, res, next) => {
     let date = new Date().toISOString().slice(0, 10)
     let today = parseInt(date.split("-").join(""))
 
-    // console.log(reqStart, today, end)
 
     if(today < start) return next()
 
@@ -154,16 +177,15 @@ router.get("/listings/:spotId", requireAuth, validateListing, async(req, res) =>
 });
 
 router.post('/listings/:spotId', requireAuth, validateOwner,
-    validateDuplicate, async (req,res) => {
+    validResDate, async (req,res) => {
         const { startDate, endDate } = req.body
-        // const newBooking = await Booking.create({
-        //     spotId: req.params.spotId,
-        //     userId: req.user.id,
-        //     startDate,
-        //     endDate
-        // });
-        res.json()
-        // res.json(newBooking);
+        const newBooking = await Booking.create({
+            spotId: req.params.spotId,
+            userId: req.user.id,
+            startDate,
+            endDate
+        });
+        res.json(newBooking);
 });
 
 router.patch('/mybookings/:bookingId', requireAuth, validateBooking, validateAuthorization, validateParams,
