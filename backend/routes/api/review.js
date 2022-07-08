@@ -8,7 +8,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateListing = async (req, res, next) => {
-    const exists = await Review.findByPk(req.params.spotId);
+    const exists = await Review.findByPk(req.params.reviewId);
 
     if(exists) return next()
 
@@ -77,7 +77,7 @@ router.get("/myreviews", requireAuth, async(req,res) => {
     res.json({Reviews})
 });
 
-router.get("/listings/:spotId", validateListing, async(req,res) => {
+router.get("/listings/:spotId", validateSpot, async(req,res) => {
     const spotId = req.params
     const reviews = await Review.findAll({
         where: spotId,
@@ -103,7 +103,7 @@ router.post("/listings/:spotId", requireAuth, validateSpot, validateDuplicate, v
     res.json(newReview);
 });
 
-router.patch("/:reviewId", requireAuth, validateAuthorization, validateReview, validateListing, async(req,res) => {
+router.patch("/:reviewId", requireAuth, validateListing, validateAuthorization, validateReview, async(req,res) => {
     const { review, stars } = req.body
 
     const reviewUpdate = await Review.findByPk(req.params.reviewId)
@@ -114,7 +114,7 @@ router.patch("/:reviewId", requireAuth, validateAuthorization, validateReview, v
     res.json(reviewUpdate);
 });
 
-router.delete("/:reviewId", requireAuth, validateAuthorization, validateListing, async (req,res) => {
+router.delete("/:reviewId", requireAuth, validateListing, validateAuthorization,  async (req,res) => {
     const review = await Review.findByPk(req.params.reviewId);
     await review.destroy();
     res.json({
