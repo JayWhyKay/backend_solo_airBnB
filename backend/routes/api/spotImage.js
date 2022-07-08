@@ -59,7 +59,7 @@ router.post('/add/:spotId', requireAuth, validateListing, validateAuthorization,
         imageableId: newImg.spotId,
         imageableType: "Spot",
         url: newImg.url
-    })
+    });
 });
 
 router.delete('/:id', requireAuth, validateImage, validateImageOwner, async (req,res) => {

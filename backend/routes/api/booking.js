@@ -30,17 +30,27 @@ const validateBooking = async (req, res, next) => {
 };
 
 const validateDuplicate = async (req, res, next) => {
-    const exists = await Booking.findAll({
+    const reservations = await Booking.findAll({
         where: {
-            spotId: req.params.spotId,
-            startDate: { [Op.lt]: new Date(req.body.endDate), [Op.gt]: new Date(req.body.startDate) },
-            endDate: { [Op.gt]: new Date(req.body.startDate), [Op.lt]: new Date(req.body.endDate) }
+            [Op.or]: [
+                { startDate: {[Op.between]: [req.body.startDate, req.body.endDate]}},
+                { endDate: {[Op.between]: [req.body.startDate, req.body.endDate]}}
+            ]
         }
     });
-    console.log(exists)
 
-    if(!exists.length) return next()
+    const exist = reservations.filter(reso => {
+        if((reso.spotId == parseInt(req.params.spotId))) return reso
+    })
+    console.log(exist)
+    if(!exist) return next()
 
+    // const existStart = reservations.filter(reso => {
+    //     ((reso.startDate == req.body.startDate) || (parseInt(reso.startDate) < parseInt(req.body.startDate) < parseInt(reso.endDate)))
+    // })
+    // console.log(existStart)
+    // const existEnd = resos.filter(reso => { reso.endDate == req.params.endDate })
+    // console.log(resos)
     const err = new Error("Sorry, this spot is already booked for the specified dates");
     err.status = 403;
     err.errors = {
@@ -150,16 +160,17 @@ router.get("/listings/:spotId", requireAuth, validateListing, async(req, res) =>
     res.json({Bookings})
 });
 
-router.post('/listings/:spotId', requireAuth, validateBooking, validateOwner,
+router.post('/listings/:spotId', requireAuth, validateOwner,
     validateDuplicate, async (req,res) => {
         const { startDate, endDate } = req.body
-        const newBooking = await Booking.create({
-            spotId: req.params.spotId,
-            userId: req.user.id,
-            startDate,
-            endDate
-        });
-        res.json(newBooking);
+        // const newBooking = await Booking.create({
+        //     spotId: req.params.spotId,
+        //     userId: req.user.id,
+        //     startDate,
+        //     endDate
+        // });
+        res.json()
+        // res.json(newBooking);
 });
 
 router.patch('/mybookings/:bookingId', requireAuth, validateBooking, validateAuthorization, validateParams,
