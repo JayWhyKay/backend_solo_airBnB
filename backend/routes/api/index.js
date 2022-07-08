@@ -1,13 +1,17 @@
 const router = require("express").Router();
-const sessionRouter = require('./session.js');
-const usersRouter = require('./users.js')
+const userRouter = require('./user.js');
+const spotRouter = require('./spot.js');
+const reviewRouter = require('./review.js');
+const bookingRouter = require('./booking.js');
+const spotImageRouter = require('./spotImage.js');
+const reviewImageRouter = require('./reviewImage.js');
 const { restoreUser } = require('../../utils/auth.js');
 
 // const { requireAuth } = require('../../utils/auth.js');
 // const { setTokenCookie } = require("../../utils/auth.js");
 // const { User } = require("../../db/models");
 
-router.use(restoreUser);
+// router.use(restoreUser);
 
 
 // router.post("/test", function (req, res) {
@@ -42,9 +46,14 @@ router.use(restoreUser);
   // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
-router.use('/session', sessionRouter);
+router.use('/user', userRouter);
+router.use('/listings', spotRouter);
+router.use('/reviews', reviewRouter);
+router.use('/bookings', bookingRouter);
+router.use('/images/listings', spotImageRouter);
+router.use('/images/reviews', reviewImageRouter);
 
-router.use('/users', usersRouter);
+// router.use('/users', usersRouter);
 
 router.post('/test', (req, res) => {
     res.json({ requestBody: req.body });
