@@ -31,10 +31,10 @@ const validateDuplicate = async (req, res, next) => {
             userId: req.user.id
         }
     });
+    
     const exist = allReviews.filter(review => {
         if(review.spotId == req.params.spotId) return review
     })
-    console.log(exist)
     if(!exist) return next()
 
     const err = new Error("User already has a review for this spot");
