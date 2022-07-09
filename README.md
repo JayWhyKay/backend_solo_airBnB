@@ -733,7 +733,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PATCH
-  * URL: /reviews/myreviews/:reviewId
+  * URL: /reviews/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -801,7 +801,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/myreviews/:reviewId
+  * URL: /reviews/:reviewId
   * Body: none
 
 * Successful Response
@@ -1251,7 +1251,8 @@ Delete an existing image.
   the image's imageableId and imageableType
 * Request
   * Method: DELETE
-  * URL: /images/:type/:id
+  * URL: /images/listings/:id for listings
+         /images/reviews/:id for reviews
   * Body: none
 
 * Successful Response
