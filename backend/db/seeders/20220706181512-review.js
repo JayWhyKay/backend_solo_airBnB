@@ -112,6 +112,16 @@ module.exports = {
         spotId: 2,
         review: "zcxvxcvzxcv",
         stars: 5
+      },
+      { userId: 4,
+        spotId: 2,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 4,
+        spotId: 2,
+        review: "zcxvxcvzxcv",
+        stars: 5
       }
       ], {});
   },

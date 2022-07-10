@@ -145,7 +145,9 @@ router.get("/mybookings", requireAuth, async(req, res) => {
             userId: req.user.id
         },
         include: [{
-            model: Spot, attributes: {exclude:['createdAt', 'updatedAt']},
+            model: Spot, attributes: {
+                exclude:['createdAt', 'updatedAt', 'numReviews', 'avgStarRating', 'description']
+            },
             include:
                 { model:SpotsImage, as: "images", attributes: ["url"], limit: 1 }
         }]
