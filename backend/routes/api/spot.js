@@ -99,7 +99,7 @@ const validateAuthorization = async (req, res, next) => {
     return next(err);
 };
 
-router.get('/myspots', requireAuth, async (req, res) => {
+router.get('/mylistings', requireAuth, async (req, res) => {
     const { user } = req
     const spots = await Spot.findAll( {
         where: { ownerId: user.id }
@@ -128,12 +128,10 @@ router.get('/:id', validateListing, async (req, res) => {
     // })
     const listing = await Spot.findByPk(req.params.id);
     const numReviews = await Review.count({where: {spotId: req.params.id}})
-    const rating = await Review.findAll({
-        where: { spotId: req.params.id },
-        attributes: [
-            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
-        ]
-    });
+    const rating = await Review.findAll({ where: { spotId: req.params.id }});
+
+    let sum = rating.reduce((prev, curr) => prev + curr.stars, 0)
+
     const images = await SpotsImage.findAll({
         where: { spotId: req.params.id },
         attributes:["url"]
@@ -141,9 +139,9 @@ router.get('/:id', validateListing, async (req, res) => {
     const Owner = await User.findByPk(listing.ownerId, {
         attributes:["id", "firstName", "lastName"]
     });
-    console.log(rating)
+
     listing.numReviews = numReviews
-    listing.avgStarRating = rating
+    listing.avgStarRating = parseFloat((sum/numReviews).toFixed(1))
 
     const result = {
         id: listing.id,
@@ -160,7 +158,7 @@ router.get('/:id', validateListing, async (req, res) => {
         createdAt: listing.createdAt,
         updatedAt: listing.updatedAt,
         numReviews: numReviews,
-        avgStarRating: rating,
+        avgStarRating: listing.avgStarRating,
         images: images,
         Owner: Owner
     }
@@ -198,7 +196,7 @@ router.get('/', validateQuery, async (req, res) => {
         size = 20
     }
     if(isNaN(page) || page <= 0) {
-        page = 1
+        page = 0
     }
     if(isNaN(size) || size <= 0 ) {
         size = 20
@@ -220,6 +218,7 @@ router.get('/', validateQuery, async (req, res) => {
 router.post('/', requireAuth, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price }
         = req.body;
+
 
     const listings = await Spot.create({
         ownerId: req.user.id,
@@ -252,7 +251,22 @@ router.patch('/:id', requireAuth, validateListing, validateSpot, validateAuthori
         description,
         price
     });
-    res.json(listing)
+    const result = {
+        id: listing.id,
+        ownerId: listing.ownerId,
+        address: listing.address,
+        city: listing.city,
+        state: listing.state,
+        country: listing.country,
+        lat: listing.lat,
+        lng: listing.lng,
+        name: listing.name,
+        description: listing.description,
+        price: listing.price,
+        createdAt: listing.createdAt,
+        updatedAt: listing.updatedAt,
+    }
+    res.json(result)
 });
 
 router.delete("/:id", requireAuth, validateListing, validateAuthorization, async(req, res) => {

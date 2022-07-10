@@ -213,7 +213,7 @@ Returns all the spots.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /listings/
+  * URL: /listings
   * Body: none
 
 * Successful Response
@@ -252,7 +252,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /listings/myspots
+  * URL: /listings/mylistings
   * Body: none
 
 * Successful Response
@@ -660,7 +660,7 @@ Create and return a new review for a spot specified by id.
     ```json
     {
       "review": "This was an awesome spot!",
-      "stars": 5,
+      "stars": 5
     }
     ```
 
@@ -733,7 +733,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PATCH
-  * URL: /reviews/:reviewId
+  * URL: /reviews/myreviews/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -741,7 +741,7 @@ Update and return an existing review.
     ```json
     {
       "review": "This was an awesome spot!",
-      "stars": 5,
+      "stars": 5
     }
     ```
 
@@ -801,7 +801,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/:reviewId
+  * URL: /reviews/myreviews/:reviewId
   * Body: none
 
 * Successful Response
