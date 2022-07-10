@@ -25,6 +25,7 @@ const validateSpot = async (req, res, next) => {
     err.status = 404;
     return next(err);
 };
+
 const validateDuplicate = async (req, res, next) => {
     const allReviews = await Review.findAll({
         where: {
@@ -35,7 +36,8 @@ const validateDuplicate = async (req, res, next) => {
     const exist = allReviews.filter(review => {
         if(review.spotId == req.params.spotId) return review
     })
-    if(!exist) return next()
+
+    if(!exist.length) return next()
 
     const err = new Error("User already has a review for this spot");
     err.status = 403;
@@ -89,7 +91,8 @@ router.get("/listings/:spotId", validateSpot, async(req,res) => {
     res.json({Reviews: reviews});
 });
 
-router.post("/listings/:spotId", requireAuth, validateSpot, validateDuplicate, validateReview, async(req,res) => {
+router.post("/listings/:spotId", requireAuth, validateSpot,
+validateDuplicate, validateReview, async(req,res) => {
 
     const spot = await Spot.findByPk(req.params.spotId)
 
@@ -103,7 +106,7 @@ router.post("/listings/:spotId", requireAuth, validateSpot, validateDuplicate, v
     res.json(newReview);
 });
 
-router.patch("/:reviewId", requireAuth, validateListing, validateAuthorization, validateReview, async(req,res) => {
+router.patch("/myreviews/:reviewId", requireAuth, validateListing, validateAuthorization, validateReview, async(req,res) => {
     const { review, stars } = req.body
 
     const reviewUpdate = await Review.findByPk(req.params.reviewId)
@@ -114,7 +117,7 @@ router.patch("/:reviewId", requireAuth, validateListing, validateAuthorization, 
     res.json(reviewUpdate);
 });
 
-router.delete("/:reviewId", requireAuth, validateListing, validateAuthorization,  async (req,res) => {
+router.delete("/myreviews/:reviewId", requireAuth, validateListing, validateAuthorization,  async (req,res) => {
     const review = await Review.findByPk(req.params.reviewId);
     await review.destroy();
     res.json({
