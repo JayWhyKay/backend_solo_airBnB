@@ -106,7 +106,6 @@ const validateParams = async (req, res, next) => {
     let date = new Date().toISOString().slice(0, 10)
     let today = parseInt(date.split("-").join(""))
 
-
     if(today < end) {
         if(reqStart < today){
             const err = new Error("Please provide a valid date");
