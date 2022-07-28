@@ -9,8 +9,7 @@ function MySpots() {
   const spots = useSelector((state) => state.spots);
 
   useEffect(() => {
-    dispatch(getMySpots())
-      .then(setIsLoaded(true));
+    dispatch(getMySpots()).then(setIsLoaded(true));
   }, [dispatch]);
 
   const dateToString = (data) => {
@@ -18,10 +17,10 @@ function MySpots() {
     const dateParams = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString(undefined, dateParams);
   };
-  const handleDelete = (id) => {
-    dispatch(removeSpot(id))
-      .then(()=>dispatch(getMySpots()))
-  }
+
+  const handleDelete = (spotId) => {
+    dispatch(removeSpot(spotId)).then(() => dispatch(getMySpots()));
+  };
 
   return (
     <div>

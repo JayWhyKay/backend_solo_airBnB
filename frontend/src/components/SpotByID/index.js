@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpotById } from "../../store/spots";
+import Reviews from "../Reviews";
+import ReviewModal from "../ReviewsModal";
 
 function SpotByID() {
   const dispatch = useDispatch();
@@ -13,7 +15,6 @@ function SpotByID() {
     dispatch(getSpotById(spotId)).then(() => setIsLoaded(true));
   }, [dispatch, spotId]);
 
-  console.log(spots);
   return (
     isLoaded && (
       <div className="spotsByID__Container">
@@ -48,7 +49,21 @@ function SpotByID() {
           <p>{spots.description}</p>
         </div>
         <div>Amenities</div>
-        <div>Reviews</div>
+        <div className="review__byId__container">
+          Reviews
+          <div className="review_byId_header">
+            <div>
+              <i className="fa-solid fa-star"></i>
+              <span>{spots.avgStarRating[0].avgStarRating}</span>
+            </div>
+            <span>-</span>
+            <div>{`${spots.numReviews} reviews`}</div>
+          </div>
+            <ReviewModal spotId={spots.id} type="Add New" reviewId="" />
+          <div className="reviews__body">
+            <Reviews spotId={spots.id} />
+          </div>
+        </div>
       </div>
     )
   );

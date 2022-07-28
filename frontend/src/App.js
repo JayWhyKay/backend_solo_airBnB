@@ -8,6 +8,7 @@ import Spots from './components/Spots'
 import Footer from "./components/Footer";
 import MySpotsLanding from "./components/MySpots";
 import SpotByID from "./components/SpotByID";
+import MyReviews from "./components/MyReviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,11 +25,14 @@ function App() {
           <Route exact path="/">
             <Spots />
           </Route>
-          <Route exact path="/listings/my-listings">
-            <MySpotsLanding />
-          </Route>
           <Route path="/listings/:spotId">
             <SpotByID />
+          </Route>
+          <Route exact path="/user/my-listings">
+            <MySpotsLanding />
+          </Route>
+          <Route path="/user/my-reviews">
+            <MyReviews />
           </Route>
         </Switch>
       )}

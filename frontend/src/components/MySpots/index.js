@@ -1,6 +1,5 @@
 import React from 'react'
 import SpotModal from '../SpotModal'
-import SpotForm from '../SpotModal/SpotForm'
 import MySpots from './MySpots'
 
 function MySpotsLanding() {
