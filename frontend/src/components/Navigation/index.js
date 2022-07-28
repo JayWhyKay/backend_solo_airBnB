@@ -48,7 +48,7 @@ function Navigation({ isLoaded }) {
         <p>Become a host</p>
         <i className="fa-solid fa-globe"></i>
         <div>
-        <i className="fa-solid fa-bars"></i>
+
         {isLoaded && sessionLinks}
         </div>
 

@@ -6,6 +6,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Spots from './components/Spots'
 import Footer from "./components/Footer";
+import MySpotsLanding from "./components/MySpots";
+import SpotByID from "./components/SpotByID";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +23,12 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Spots />
+          </Route>
+          <Route exact path="/listings/my-listings">
+            <MySpotsLanding />
+          </Route>
+          <Route path="/listings/:spotId">
+            <SpotByID />
           </Route>
         </Switch>
       )}

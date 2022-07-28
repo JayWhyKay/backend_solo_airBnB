@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/loadSpots";
+const LOAD_SPOTS_BYID = "spots/loadSpotsById";
 const DELETE_SPOT = "spots/deleteSpot";
 const ADD_SPOT = "spots/addSpot";
 const UPDATE_SPOT = "spots/updateSpot";
@@ -8,6 +9,13 @@ const UPDATE_SPOT = "spots/updateSpot";
 const loadS = (spots) => {
   return {
     type: LOAD_SPOTS,
+    payload: spots,
+  };
+};
+
+const loadSByID = (spots) => {
+  return {
+    type: LOAD_SPOTS_BYID,
     payload: spots,
   };
 };
@@ -43,14 +51,14 @@ export const getSpots = () => async dispatch => {
 export const getMySpots = () => async dispatch => {
   const response = await csrfFetch('/listings/myspots');
   const data = await response.json();
-  dispatch(loadS(data));
+  dispatch(loadS(data.Spots));
   return response;
 };
 
 export const getSpotById = spotId => async dispatch => {
   const response = await fetch(`/listings/${spotId}`);
   const data = await response.json();
-  dispatch(loadS(data));
+  dispatch(loadSByID(data));
   return response;
 };
 
@@ -64,11 +72,22 @@ export const removeSpot = (spotId) => async (dispatch) => {
   return response;
 };
 
-export const updateSpot = (spotInfo) => async (dispatch) => {
-  const response = await csrfFetch(`/listings/${spotInfo.id}`, {
+export const updateSpot = (spotInfo, id) => async (dispatch) => {
+  const { address, city, state, country, lat, lng, name, description, price, previewImage } = spotInfo
+  const response = await csrfFetch(`/listings/${id}`, {
     method: "PATCH",
     headers: {"CONTENT_TYPE": "application/json"},
-    body: JSON.stringify(spotInfo),
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
+    }),
   });
   const data = await response.json();
   dispatch(updateS(data));
@@ -79,7 +98,7 @@ export const addSpot = (spotInfo) => async (dispatch) => {
   const response = await csrfFetch(`/listings`, {
     method: "POST",
     headers: {"CONTENT_TYPE":"application/json"},
-    body: JSON.stringify({spotInfo}),
+    body: JSON.stringify(spotInfo),
   });
 
   const data = await response.json();
@@ -95,15 +114,21 @@ const spotsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case LOAD_SPOTS:
-      newState = {};
+      newState = {...state};
       action.payload.forEach(spot => newState[spot.id] = spot)
-      return {
-        ...newState,
-        entries: action.payload
-      };
+      newState.entries = action.payload
+      return newState;
+    case LOAD_SPOTS_BYID:
+      newState = {...state};
+      newState[action.payload.id] = action.payload
+      return newState;
+    case ADD_SPOT:
+      newState= {...state};
+      newState[action.payload.id] = action.payload
+      return newState
     case DELETE_SPOT:
       newState = Object.assign({}, state);
-      newState = null;
+      newState[action.payload] = null;
       return newState;
     default:
       return state;
