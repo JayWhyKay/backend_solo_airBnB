@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Modal} from '../../context/Modal'
 import SpotForm from './SpotForm';
+import './SpotModal.css'
 
 
 function SpotModal({spotId, type}) {

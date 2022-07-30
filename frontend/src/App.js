@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-// import SignupFormPage from "./components/SignupFormPage";
-import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import * as sessionActions from "./store/session";
 import Spots from './components/Spots'
 import Footer from "./components/Footer";
 import MySpotsLanding from "./components/MySpots";
@@ -20,7 +19,6 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
         <Switch>
           <Route exact path="/">
             <Spots />
@@ -35,7 +33,6 @@ function App() {
             <MyReviews />
           </Route>
         </Switch>
-      )}
       <Footer />
     </>
   );

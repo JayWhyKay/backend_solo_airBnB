@@ -1,0 +1,29 @@
+.all__reviews__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.review_container {
+  width: 45%;
+  margin-bottom: 40px;
+  padding-right: 8px;
+
+}
+
+.review_container__header {
+  display:flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.review_container__header > p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.review_container__header > span {
+  font-size: 14px;
+  color: gray;
+}

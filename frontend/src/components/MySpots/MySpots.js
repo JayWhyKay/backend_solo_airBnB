@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMySpots, removeSpot } from "../../store/spots";
 import SpotModal from "../SpotModal";
+import "./MySpots.css";
 
 function MySpots() {
   const dispatch = useDispatch();
@@ -28,31 +29,31 @@ function MySpots() {
         spots.entries?.map((spot) => {
           return (
             <div className="mylisting_card" key={`mylistings` + spot.id}>
-              <img
-                className="my__preview__img"
-                src={[spot.previewImage[0]?.url]}
-                alt="spot preview"
-              />
-              <h3 className="card__name">{spot.name}</h3>
-              <ul className="card__details">
-                <li>{spot.address}</li>
-                <li>
-                  {spot.city}, {spot.state}
-                </li>
-                <li>{spot.description}</li>
-                <li>
-                  <span>${spot.price}</span> night
-                </li>
-                <li>Last Updated: {dateToString(spot.updatedAt)}</li>
-              </ul>
-              <div className="edit__listing__container">
-                <SpotModal spotId={spot.id} type={"Edit Listing"} />
-                <button
-                  className="delete__spot__button"
-                  onClick={() => handleDelete(spot.id)}
-                >
-                  Delete Listing
-                </button>
+              <div>
+                {
+                  spot.previewImage[0] ?
+                  <img src={[spot.previewImage[0]?.url]} alt="spot preview" />
+                  : <span>No images were provided.</span>
+                }
+              </div>
+              <div className="card__details">
+                <h3>{spot.name}</h3>
+                <ul>
+                  <li>{spot.address}</li>
+                  <li>
+                    {spot.city}, {spot.state}
+                  </li>
+                  <li>
+                    <span>${spot.price}</span> night
+                  </li>
+                  <li>Last Updated: {dateToString(spot.updatedAt)}</li>
+                </ul>
+                <div className="edit__listing__container">
+                  <SpotModal spotId={spot.id} type={"Edit Listing"} />
+                  <button onClick={() => handleDelete(spot.id)}>
+                    Delete Listing
+                  </button>
+                </div>
               </div>
             </div>
           );
