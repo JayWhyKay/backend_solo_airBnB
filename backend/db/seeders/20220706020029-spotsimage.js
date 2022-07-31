@@ -51,6 +51,9 @@ module.exports = {
       { spotId: 1,
         url: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmF0aHJvb218ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'
       },
+      { spotId: 1,
+        url: 'https://images.unsplash.com/photo-1658947051795-1bbc7e132847?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMjl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=300&q=60'
+      },
       { spotId: 2,
         url: 'https://images.unsplash.com/photo-1604709177225-055f99402ea3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YmF0aHJvb218ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'
       },

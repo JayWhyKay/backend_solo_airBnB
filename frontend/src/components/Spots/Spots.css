@@ -20,6 +20,7 @@
   grid-gap: 0.5em;
   margin: 0 5%;
   grid-auto-flow: dense;
+  margin-bottom: 150px;
 }
 
 .spotCard {

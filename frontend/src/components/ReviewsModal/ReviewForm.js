@@ -28,7 +28,7 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
         .then(() => onClose())
         .catch(async (res) => {
           const data = await res.json();
-          if (data) setErrors(data.errors);
+          if (data) setErrors(Object.values(data.errors));
         })
         .then(() => dispatch(getMyReviews()));
     } else {
@@ -36,8 +36,7 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
         .then(() => onClose())
         .catch(async (res) => {
           const data = await res.json();
-          console.log();
-          if (data) setErrors([data.message]);
+          if (data) setErrors(([data.message]));
         })
         .then(() => dispatch(getSpotReviews(spotId)))
         .then(() => dispatch(getSpotById(spotId)));
@@ -46,10 +45,10 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
   return (
     <div className="review__form__container">
       <div className="review__form__header">
+        <span>{type} Review</span>
         <button className="review__form__close" onClick={onClose}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <p className="review__title">{type} Review</p>
       </div>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -60,7 +59,7 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
               </li>
             ))}
         </ul>
-        <div className="form__entry">
+        <div>
           <Stars
             setStars={setStars}
             setFocus={setFocus}
@@ -68,20 +67,19 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
             focus={focus}
           />
         </div>
-        <div className="form__entry">
+        <div className="review_text_container">
           <label>
             Tell us more about your experience:
             <textarea
-              rows="5"
-              cols="45"
+              className="edit_review_textarea"
               maxLength="250"
               value={review}
               onChange={(e) => setReview(e.target.value)}
             />
           </label>
         </div>
-        <div className="form__entry">
-          <button type="submit">Submit</button>
+        <div>
+          <button className="review__form__button" type="submit">Submit</button>
         </div>
       </form>
     </div>

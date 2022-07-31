@@ -16,17 +16,14 @@ const validateSpot = [
     check('city')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .isAlpha()
         .withMessage('Please provide a valid city.'),
     check('state')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .isAlpha()
         .withMessage('Please provide a valid state.'),
     check('country')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .isAlpha()
         .withMessage('Please provide a valid country.'),
     check('lat')
         .exists()

@@ -1,1 +1,71 @@
+.review__form__container {
+  width: 400px;
+  border-radius: 15px;
+  padding: 15px;
+}
 
+.review__form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.202);
+}
+
+.review__form__header > span {
+  font-weight: 500;
+  font-size: 14pt;
+}
+
+.review_text_container {
+  height: 140px;
+}
+
+.edit_review_textarea {
+  resize: none;
+  width: 385px;
+  height: 100px;
+  box-shadow: 2px 2px 1px 2px rgba(128, 128, 128, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(211, 211, 211, 0.8);
+  padding: 5px;
+  color: rgba(50, 50, 50, 0.75);
+}
+
+.edit_review_textarea:focus {
+  outline: none;
+  box-shadow: 2px 2px 1px 2px rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  border: 2px solid rgba(211, 211, 211, 0.8);
+}
+
+
+.review__form__button {
+  border: 0.5px solid rgba(128, 128, 128, 0.1);
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px rgba(128, 128, 128, 0.2);
+  background-color: white;
+  height: 25px;
+  width: 150px;
+  cursor: pointer;
+}
+
+.review__form__button:hover {
+  background-color: rgba(200,200,200, 0.1);
+  box-shadow: 1px 1px 2px 3px rgba(128, 128, 128, 0.5);
+}
+
+
+.review__form__close {
+  border: 0.5px solid rgba(128, 128, 128, 0.1);
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px rgba(128, 128, 128, 0.25);
+  background-color: white;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+.review__form__close:hover {
+  background-color: rgba(200,200,200, 0.25);
+  box-shadow: 1px 1px 2px 3px rgba(128, 128, 128, 0.5);
+}

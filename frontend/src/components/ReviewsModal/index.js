@@ -12,7 +12,7 @@ function ReviewModal({ spotId, type, reviewId }) {
         {type} Review
       </button>
       {showModal && (
-        <div className="review__modal__container">
+        <div>
           <Modal onClose={() => setShowModal(false)}>
             <ReviewForm
               onClose={() => setShowModal(false)}
