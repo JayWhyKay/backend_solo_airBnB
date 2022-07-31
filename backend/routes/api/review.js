@@ -97,6 +97,7 @@ validateDuplicate, validateReview, async(req,res) => {
     const spot = await Spot.findByPk(req.params.spotId)
 
     const { review, stars } = req.body
+
     const newReview = await Review.create({
         userId: req.user.id,
         spotId: spot.id,

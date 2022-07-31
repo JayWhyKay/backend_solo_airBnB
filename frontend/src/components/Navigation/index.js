@@ -17,7 +17,6 @@ function Navigation({ isLoaded }) {
       <>
         <LoginFormModal />
         <SignupFormModal />
-        {/* <NavLink to="/signup">Sign Up</NavLink> */}
       </>
     );
   }
@@ -25,13 +24,9 @@ function Navigation({ isLoaded }) {
   return (
     <div className="header">
       <div className="logo__container">
-        <img
-          src="http://airbnb.com/favicon.ico"
-          alt="airbnb logo"
-          className="nav__logo"
-        />
+      <i className="fa-solid fa-otter fa-2x"></i>
         <Link className="home__link" exact to="/">
-          airbnb
+          Mybnb
         </Link>
       </div>
 
@@ -47,11 +42,7 @@ function Navigation({ isLoaded }) {
       <div className="profile__container">
         <p>Become a host</p>
         <i className="fa-solid fa-globe"></i>
-        <div>
-        <i className="fa-solid fa-bars"></i>
-        {isLoaded && sessionLinks}
-        </div>
-
+        <div>{sessionLinks}</div>
       </div>
     </div>
   );

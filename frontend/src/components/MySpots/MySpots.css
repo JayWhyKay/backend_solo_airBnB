@@ -1,0 +1,75 @@
+.mylisting_card {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 2% 3%;
+  width: 100%;
+  height: 200px;
+}
+
+.mylisting_card > div > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  width:  250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  background-color: rgba(255, 200, 190, 0.4);
+  box-shadow: 2px 2px 2px 2px lightpink;
+}
+
+
+.mylisting_card > div > img {
+  float: left;
+  width:  250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 2px lightpink;
+}
+
+.card__details {
+  /* background-color: aquamarine; */
+  margin-left: 5%;
+  width: 100%;
+  min-width: 250px;
+  max-width: 500px;
+}
+
+.card__details > h3 {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 10px ;
+}
+
+.card__details > ul {
+  list-style: none;
+  font-size: 11pt;
+  padding-left: 30px;
+}
+
+.card__details > ul > li {
+  color: rgb(90, 90, 90);
+}
+
+.edit__listing__container {
+  width: 320px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.edit__listing__container > button {
+  border: 0.5px solid rgba(128, 128, 128, 0.1);
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px rgba(128, 128, 128, 0.2);
+  background-color: white;
+  height: 25px;
+  width: 150px;
+  cursor: pointer;
+}
+
+.edit__listing__container > button:hover {
+  background-color: rgba(200,200,200, 0.1);
+  box-shadow: 1px 1px 2px 3px rgba(128, 128, 128, 0.5);
+}

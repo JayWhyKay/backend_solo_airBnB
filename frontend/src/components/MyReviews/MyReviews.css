@@ -1,0 +1,10 @@
+.my__reviews__container {
+  margin: 0 15%;
+  margin-bottom: 150px;
+}
+
+.my__reviews__container > h2 {
+  border-bottom: 1px solid rgba(121,121,121,0.4) ;
+  font-weight: 500;
+  padding: 24px 10%;
+}

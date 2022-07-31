@@ -12,38 +12,38 @@ const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
         .isLength({ min: 1 })
-        .withMessage('Street address is required.'),
+        .withMessage('Please provide a valid street address.'),
     check('city')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .withMessage('City is required'),
+        .withMessage('Please provide a valid city.'),
     check('state')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .withMessage('State is required'),
+        .withMessage('Please provide a valid state.'),
     check('country')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .withMessage('Country is required.'),
+        .withMessage('Please provide a valid country.'),
     check('lat')
         .exists()
         .isFloat({ min: -90, max:  90})
-        .withMessage('Latitude is not valid'),
+        .withMessage('Latitude is not valid.'),
     check('lng')
         .exists()
         .isFloat({min:-180, max:180})
-        .withMessage('Longitude is not valid'),
+        .withMessage('Longitude is not valid.'),
     check('name')
         .exists({ checkFalsy: true })
-        .withMessage('Name must be less than 50 characters')
+        .withMessage('Name must be less than 50 characters.')
         .isLength({ max: 50 })
-        .withMessage('Name must be less than 50 characters'),
+        .withMessage('Name must be less than 50 characters.'),
     check('description')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .withMessage('Description is required.'),
     check('price')
         .exists({ checkFalsy: true })
-        .withMessage('Price per day is required'),
+        .withMessage('Price per day is required.'),
     handleValidationErrors
 ];
 const validateQuery = [
@@ -102,7 +102,12 @@ const validateAuthorization = async (req, res, next) => {
 router.get('/mylistings', requireAuth, async (req, res) => {
     const { user } = req
     const spots = await Spot.findAll( {
-        where: { ownerId: user.id }
+        where: { ownerId: user.id },
+        include: [{
+            model: SpotsImage, as: "previewImage",
+            attributes: ['url'],
+            limit: 1
+        }]
     });
     res.json({ Spots: spots })
 });
