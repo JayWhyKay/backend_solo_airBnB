@@ -19,6 +19,17 @@ const validateListing = async (req, res, next) => {
     return next(err);
 };
 
+const validateSpot = async (req, res, next) => {
+    const booking = await Booking.findByPk(req.params.bookingId)
+    const exists = await Spot.findByPk(booking.spotId);
+
+    if(exists) return next()
+
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    return next(err);
+};
+
 const validateBooking = async (req, res, next) => {
     const exists = await Booking.findByPk(req.params.bookingId);
 
@@ -144,7 +155,9 @@ router.get("/mybookings", requireAuth, async(req, res) => {
             userId: req.user.id
         },
         include: [{
-            model: Spot, attributes: {exclude:['createdAt', 'updatedAt']},
+            model: Spot, attributes: {
+                exclude:['createdAt', 'updatedAt', 'numReviews', 'avgStarRating', 'description']
+            },
             include:
                 { model:SpotsImage, as: "images", attributes: ["url"], limit: 1 }
         }]
@@ -187,7 +200,8 @@ router.post('/listings/:spotId', requireAuth, validateOwner,
         res.json(newBooking);
 });
 
-router.patch('/mybookings/:bookingId', requireAuth, validateBooking, validateAuthorization, validateParams,
+router.patch('/mybookings/:bookingId', requireAuth, validateBooking,
+validateAuthorization, validateParams,
     async (req, res) => {
         const { startDate, endDate } = req.body
         const updateBooking = await Booking.findByPk(req.params.bookingId)

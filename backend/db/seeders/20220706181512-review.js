@@ -14,24 +14,114 @@ module.exports = {
 
     return queryInterface.bulkInsert('Reviews', [
       { userId: 1,
-        spotId: 2,
+        spotId: 3,
         review: "asdfasdfasdfadf",
         stars: 3
+      },
+      { userId: 1,
+        spotId: 4,
+        review: "asdfasdfasdfadf",
+        stars: 4
+      },
+      { userId: 1,
+        spotId: 5,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 1,
+        spotId: 6,
+        review: "zcxvxcvzxcv",
+        stars: 4
+      },
+      { userId: 2,
+        spotId: 1,
+        review: "asdfasdfasdfadf",
+        stars: 3
+      },
+      { userId: 2,
+        spotId: 2,
+        review: "asdfasdfasdfadf",
+        stars: 4
+      },
+      { userId: 2,
+        spotId: 5,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 2,
+        spotId: 6,
+        review: "zcxvxcvzxcv",
+        stars: 4
+      },
+      { userId: 3,
+        spotId: 1,
+        review: "asdfasdfasdfadf",
+        stars: 3
+      },
+      { userId: 3,
+        spotId: 2,
+        review: "asdfasdfasdfadf",
+        stars: 4
+      },
+      { userId: 3,
+        spotId: 3,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 3,
+        spotId: 4,
+        review: "zcxvxcvzxcv",
+        stars: 4
+      },
+      { userId: 1,
+        spotId: 1,
+        review: "asdfasdfasdfadf",
+        stars: 5
       },
       { userId: 1,
         spotId: 1,
         review: "asdfasdfasdfadf",
         stars: 4
       },
-      { userId: 2,
+      { userId: 1,
         spotId: 1,
         review: "qwerqwer",
         stars: 5
       },
       { userId: 1,
-        spotId: 2,
+        spotId: 1,
         review: "zcxvxcvzxcv",
         stars: 4
+      },
+      { userId: 2,
+        spotId: 2,
+        review: "asdfasdfasdfadf",
+        stars: 3
+      },
+      { userId: 2,
+        spotId: 2,
+        review: "asdfasdfasdfadf",
+        stars: 4
+      },
+      { userId: 2,
+        spotId: 2,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 2,
+        spotId: 2,
+        review: "zcxvxcvzxcv",
+        stars: 5
+      },
+      { userId: 4,
+        spotId: 2,
+        review: "qwerqwer",
+        stars: 5
+      },
+      { userId: 4,
+        spotId: 2,
+        review: "zcxvxcvzxcv",
+        stars: 5
       }
       ], {});
   },

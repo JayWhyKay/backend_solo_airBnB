@@ -67,7 +67,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       avgStarRating: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL
       },
     });
   },
