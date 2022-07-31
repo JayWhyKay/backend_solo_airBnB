@@ -25,7 +25,7 @@ export const signup = (user) => async (dispatch) => {
     body: JSON.stringify({ firstName, lastName, email, password }),
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
 };
 
@@ -47,9 +47,8 @@ export const login = (user) => async (dispatch) => {
       password,
     }),
   });
-
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
 };
 

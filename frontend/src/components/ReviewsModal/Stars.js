@@ -65,9 +65,10 @@ function Stars({setStars, setFocus, stars, focus}) {
   }
   return (
     <div className="star__container">
-      {[1, 2, 3, 4, 5].map((index) => {
+      {[1, 2, 3, 4, 5].map((index, i) => {
         return (
           <RatingIcon
+            key={'stars' + i}
             index={index}
             rating={stars}
             hoverRating={focus}

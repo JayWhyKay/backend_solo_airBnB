@@ -11,6 +11,7 @@ function SpotByID() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { spotId } = useParams();
   const spots = useSelector((state) => state.spots[+spotId]);
+  // console.log(spots.avgStarRating)
 
   useEffect(() => {
     dispatch(getSpotById(spotId)).then(() => setIsLoaded(true));
@@ -23,12 +24,12 @@ function SpotByID() {
           <h1>{spots.name}</h1>
           <div className="spotByID_details">
             <i className="fa-solid fa-star"></i>
-            <span> {spots.avgStarRating[0].avgStarRating}</span>
+            <span> {spots.avgStarRating}</span>
             <span>{` · `}</span>
             <span>{spots.numReviews} reviews</span>
             <span>{` · `}</span>
             <span>
-              <i class="fa-solid fa-award"></i> Superhost
+              <i className="fa-solid fa-award"></i> Superhost
             </span>
             <span>{` · `}</span>
             <span>{spots.city}, </span>
@@ -99,7 +100,7 @@ function SpotByID() {
           <div className="review_byId_header">
             <div>
               <i className="fa-solid fa-star"></i>
-              <span>{spots.avgStarRating[0].avgStarRating}</span>
+              <span>{spots.avgStarRating}</span>
               <span>{` · `}</span>
               <div>{`${spots.numReviews} reviews`}</div>
             </div>

@@ -49,8 +49,9 @@ export const getSpots = () => async dispatch => {
 };
 
 export const getMySpots = () => async dispatch => {
-  const response = await csrfFetch('/listings/myspots');
+  const response = await csrfFetch('/listings/mylistings');
   const data = await response.json();
+  console.log(data)
   dispatch(loadS(data.Spots));
   return response;
 };

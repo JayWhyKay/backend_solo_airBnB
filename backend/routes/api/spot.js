@@ -115,22 +115,6 @@ router.get('/mylistings', requireAuth, async (req, res) => {
 
 router.get('/:id', validateListing, async (req, res) => {
 
-    // const listing = await Spot.findByPk(req.params.id,
-    //     {include: [
-    //         { model: SpotsImage, as: "images", attributes: ["url"] },
-    //         { model: User, as: "Owner" }
-    //     ]
-    // })
-    // const average = await Spot.findByPk(req.params.id, {
-    //     include: {
-    //         model: Review,
-    //         attributes: []
-    //     },
-    //     attributes: [
-    //         [sequelize.fn("COUNT", sequelize.col("*")), 'numReviews'],
-    //         [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']
-    //     ]
-    // })
     const listing = await Spot.findByPk(req.params.id);
     const numReviews = await Review.count({where: {spotId: req.params.id}})
     const rating = await Review.findAll({ where: { spotId: req.params.id }});

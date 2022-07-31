@@ -34,7 +34,7 @@ module.exports = {
       { reviewId: 2,
         url: 'https://images.unsplash.com/photo-1658893769271-c2461cab05b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMTR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=300&q=60'
       },
-      { reviewId: 2,
+      { reviewId: 3,
         url: 'https://images.unsplash.com/photo-1658941854929-14f85ea8397e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMTh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=300&q=60'
       }
       ], {});

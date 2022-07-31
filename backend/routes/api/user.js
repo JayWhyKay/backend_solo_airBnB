@@ -8,7 +8,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateLogin = [  //checks to see whether or not req.body.credential and req.body.password
-    check('email')
+    check('credential')
         .exists({ checkFalsy: true })
         .notEmpty()
         .withMessage('Email is required'),
@@ -83,9 +83,9 @@ router.post( '/sign-up', validateEmail, validSignupParams, async (req, res) => {
 
 // Log in
 router.post( '/', validateLogin, async (req, res, next) => {
-    const { email, password } = req.body;
+    const { credential, password } = req.body;
 
-    const user = await User.login({ email, password });
+    const user = await User.login({ credential, password });
 
     if (!user) {
         const err = new Error('Login failed');
@@ -117,18 +117,18 @@ router.delete( '/', (_req, res) => {
 router.get( '/', restoreUser, async (req, res) => {
     const { user } = req;
     if (user) {
-        // const token = await setTokenCookie(res, user);
+        const token = await setTokenCookie(res, user);
         currentUser = {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            // token
+            token
         }
         return res.json(
             currentUser
         );
-    } else return res.json();
+    } else return res.json(null);
 });
 
 
