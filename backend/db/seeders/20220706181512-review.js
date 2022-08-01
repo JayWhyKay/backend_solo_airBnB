@@ -25,12 +25,12 @@ module.exports = {
       },
       { userId: 1,
         spotId: 5,
-        review: "Either way, you cannot help but leave differently than you arrived. Deserts have always been steeped in mysticism and the awakening of clarity, awe and transformation… a place where the Phoenix comes to set itself on fire and the Alchemist to learn how to become the wind.",
+        review: "Either way, you cannot help but leave differently than you arrived. Deserts have always been steeped in mysticism and the awakening of clarity, awe and transformation.",
         stars: 5
       },
       { userId: 1,
         spotId: 6,
-        review: "At sunset, you’ll definitely want to dip into the salt water hot tub, and then hop over to the firepit to dry off and start cocktail hour. With Pappy’s, Red Dog and La Copine (reviewed by the NYTimes as a “dining room run with joy and exuberance”) all within 20 minutes, we like to do dinner out at least one night (or as take away). And cook in the rest of the time.",
+        review: "At sunset, you’ll definitely want to dip into the salt water hot tub, and then hop over to the firepit to dry off and start cocktail hour. With Pappy’s, Red Dog and La Copine and cook in the rest of the time.",
         stars: 4
       },
       { userId: 2,
@@ -45,7 +45,7 @@ module.exports = {
       },
       { userId: 2,
         spotId: 5,
-        review: "The bedrooms feature king-sized beds with pure Dunlop Latex mattresses and pillow tops (all natural from trees, no chemicals or metal coils); organic cotton and linen bedding; floor-to-ceiling sliders so that you may sleep with a view of the moon and stars – or black-out curtains if you prefer.",
+        review: "The bedrooms feature king-sized beds with pure Dunlop Latex mattresses and pillow tops (all natural from trees, no chemicals or metal coils); organic cotton and linen bedding.",
         stars: 5
       },
       { userId: 2,
@@ -80,7 +80,7 @@ module.exports = {
       },
       { userId: 1,
         spotId: 1,
-        review: "Whatever you are moved to do or not do, let go of or allow to come in while you are here, we wish you a beautiful, blessed, joyful, magical, transformative and memorable stay at Sol to Soul… where we welcome you to dream, play, burn, be and love.",
+        review: "Whatever you are moved to do or not do, let go of or allow to come in while you are here, we wish you a beautiful, blessed, joyful, magical, transformative and memorable stay at Sol to Soul.",
         stars: 4
       },
       { userId: 1,
@@ -95,7 +95,7 @@ module.exports = {
       },
       { userId: 2,
         spotId: 2,
-        review: "If at any time during your stay you find your listing isn't as advertised—for example, the refrigerator stops working and your Host can’t easily fix it, or it has fewer bedrooms than listed—you'll have three days to report it and we’ll find you a similar or better home, or we’ll refund you.",
+        review: "If at any time during your stay you find your listing isn't as advertised—for example, the refrigerator stops working.",
         stars: 3
       },
       { userId: 2,
@@ -105,17 +105,17 @@ module.exports = {
       },
       { userId: 2,
         spotId: 2,
-        review: "Completely walled and hedged in for privacy, Shelby Sands is like checking in to your own private Palm Springs resort compound! ",
+        review: "Completely walled and hedged in for privacy, Shelby Sands is like checking in to your own private Palm Springs!",
         stars: 5
       },
       { userId: 2,
         spotId: 2,
-        review: "The pool, spa and covered lounge patio, plus many of the interior rooms, have gorgeous views of the San Jacinto Mountains to the West.",
+        review: "The pool, spa and covered lounge patio, plus many of the interior rooms, have gorgeous views of the San Jacinto Mountains.",
         stars: 5
       },
       { userId: 4,
         spotId: 2,
-        review: "Once you're situated, you may never want to leave, except perhaps to check out the nearby restaurants and bars, just a block or two way.",
+        review: "Once you're situated, you may never want to leave, except perhaps to check out the nearby restaurants and bars.",
         stars: 5
       },
       { userId: 4,
