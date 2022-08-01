@@ -34,14 +34,14 @@ const deleteR = (reviewId) => {
 };
 
 export const getSpotReviews = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/listings/${spotId}`);
+  const response = await csrfFetch(`/api/reviews/listings/${spotId}`);
   const data = await response.json();
   dispatch(loadR(data.Reviews));
   return response;
 };
 
 export const getMyReviews = () => async (dispatch) => {
-  const response = await csrfFetch("/reviews/myreviews");
+  const response = await csrfFetch("/api/reviews/myreviews");
   const data = await response.json();
   console.log(data)
   dispatch(loadR(data.Reviews));
@@ -49,7 +49,7 @@ export const getMyReviews = () => async (dispatch) => {
 };
 
 export const addReview = (spotId, reviewData) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/listings/${spotId}`, {
+  const response = await csrfFetch(`/api/reviews/listings/${spotId}`, {
     method: "POST",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(reviewData),
@@ -61,7 +61,7 @@ export const addReview = (spotId, reviewData) => async (dispatch) => {
 };
 
 export const updateReview = (reviewId, reviewData) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/myreviews/${reviewId}`, {
+  const response = await csrfFetch(`/api/reviews/myreviews/${reviewId}`, {
     method: "PATCH",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(reviewData),
@@ -72,7 +72,7 @@ export const updateReview = (reviewId, reviewData) => async (dispatch) => {
 };
 
 export const removeReview = (reviewId) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/myreviews/${reviewId}`, {
+  const response = await csrfFetch(`/api/reviews/myreviews/${reviewId}`, {
     method: "DELETE",
   });
     dispatch(deleteR(reviewId));

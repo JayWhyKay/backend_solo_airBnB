@@ -50,14 +50,14 @@ const updateS = (spot) => {
 };
 
 export const getSpots = () => async (dispatch) => {
-  const response = await fetch("/listings");
+  const response = await fetch("/api/listings");
   const data = await response.json();
   dispatch(loadS(data.Spots));
   return response;
 };
 
 export const getMySpots = () => async (dispatch) => {
-  const response = await csrfFetch("/listings/mylistings");
+  const response = await csrfFetch("/api/listings/mylistings");
   const data = await response.json();
   console.log(data);
   dispatch(loadMyS(data.Spots));
@@ -65,14 +65,14 @@ export const getMySpots = () => async (dispatch) => {
 };
 
 export const getSpotById = (spotId) => async (dispatch) => {
-  const response = await fetch(`/listings/${spotId}`);
+  const response = await fetch(`/api/listings/${spotId}`);
   const data = await response.json();
   dispatch(loadSByID(data));
   return response;
 };
 
 export const removeSpot = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/listings/${spotId}`, {
+  const response = await csrfFetch(`/api/listings/${spotId}`, {
     method: "DELETE",
   });
   dispatch(deleteS(spotId));
@@ -92,7 +92,7 @@ export const updateSpot = (spotInfo, id) => async (dispatch) => {
     price,
     imageURL
   } = spotInfo;
-  const response = await csrfFetch(`/listings/${id}`, {
+  const response = await csrfFetch(`/api/listings/${id}`, {
     method: "PATCH",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify({
@@ -114,7 +114,7 @@ export const updateSpot = (spotInfo, id) => async (dispatch) => {
 };
 
 export const addSpot = (spotInfo) => async (dispatch) => {
-  const response = await csrfFetch(`/listings`, {
+  const response = await csrfFetch(`/api/listings`, {
     method: "POST",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(spotInfo),

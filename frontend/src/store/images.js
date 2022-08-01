@@ -21,7 +21,7 @@ const deleteI = (imageId) => {
 };
 
 export const addSpotImage = (spotId, imageURL) => async (dispatch) => {
-  const response = await csrfFetch(`/images/listings/add/${spotId}`, {
+  const response = await csrfFetch(`/api/images/listings/add/${spotId}`, {
     method: "POST",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(imageURL),
@@ -33,7 +33,7 @@ export const addSpotImage = (spotId, imageURL) => async (dispatch) => {
 };
 
 export const addReviewImage = (reviewId, imageURL) => async (dispatch) => {
-  const response = await csrfFetch(`/images/reviews/add/${reviewId}`, {
+  const response = await csrfFetch(`/api/images/reviews/add/${reviewId}`, {
     method: "POST",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(imageURL),
@@ -45,7 +45,7 @@ export const addReviewImage = (reviewId, imageURL) => async (dispatch) => {
 };
 
 export const removeSpotImage = (imageId) => async (dispatch) => {
-  const response = await csrfFetch(`/images/listings/${imageId}`, {
+  const response = await csrfFetch(`/api/images/listings/${imageId}`, {
     method: "DELETE",
   });
     dispatch(deleteI(imageId));
@@ -53,7 +53,7 @@ export const removeSpotImage = (imageId) => async (dispatch) => {
 };
 
 export const removeReviewImage = (imageId) => async (dispatch) => {
-  const response = await csrfFetch(`/images/reviews/${imageId}`, {
+  const response = await csrfFetch(`/api/images/reviews/${imageId}`, {
     method: "DELETE",
   });
     dispatch(deleteI(imageId));

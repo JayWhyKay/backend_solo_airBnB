@@ -1,62 +1,48 @@
-const router = require("express").Router();
-const userRouter = require('./user.js');
-const spotRouter = require('./spot.js');
-const reviewRouter = require('./review.js');
-const bookingRouter = require('./booking.js');
+const router = require('express').Router();
+const sessionRouter = require('./session');
+const usersRouter = require('./zzzusers');
+const spotsRouter = require('./spots');
+const reviewsRouter = require('./reviews');
+const bookingsRouter = require('./bookings');
 const spotImageRouter = require('./spotImage.js');
 const reviewImageRouter = require('./reviewImage.js');
-const { restoreUser } = require('../../utils/auth.js');
 
-// const { requireAuth } = require('../../utils/auth.js');
-// const { setTokenCookie } = require("../../utils/auth.js");
-// const { User } = require("../../db/models");
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.js');
+const { User } = require('../../db/models');
 
-// router.use(restoreUser);
+// Connect restoreUser middleware to the API router
+// If current user session is valid, set req.user to the user in the database
+// If current user session is not valid, set req.user to null
+router.use(restoreUser);
+router.use('/login', sessionRouter);
+router.use('/users', usersRouter);
+router.use('/listings', spotsRouter);
+router.use('/reviews', reviewsRouter);
+router.use('/bookings', bookingsRouter);
+router.use('/images/listings', spotImageRouter);
+router.use('/images/reviews', reviewImageRouter);
 
+router.post('/test', function (req, res) {
+    res.json({ requestBody: req.body });
+});
 
-// router.post("/test", function (req, res) {
-//     res.json({ requestBody: req.body });
-// });
-
-// // GET /api/set-token-cookie
-// router.get("/set-token-cookie", async (_req, res) => {
+// GET /api/set-token-cookie
+// router.get('/set-token-cookie', async (_req, res) => {
 //     const user = await User.findOne({
 //         where: {
-//             username: "Demo-lition",
-//         },
+//             username: 'Demo'
+//         }
 //     });
 //     setTokenCookie(res, user);
 //     return res.json({ user });
 // });
 
-// // GET /api/restore-user
 // router.get('/restore-user', (req, res) => {
 //     return res.json(req.user);
 // });
 
-// // GET /api/require-auth
 // router.get('/require-auth', requireAuth, (req, res) => {
 //     return res.json(req.user);
-// });
-
-
-//Phase 4
-// Connect restoreUser middleware to the API router
-  // If current user session is valid, set req.user to the user in the database
-  // If current user session is not valid, set req.user to null
-router.use(restoreUser);
-
-router.use('/user', userRouter);
-router.use('/listings', spotRouter);
-router.use('/reviews', reviewRouter);
-router.use('/bookings', bookingRouter);
-router.use('/images/listings', spotImageRouter);
-router.use('/images/reviews', reviewImageRouter);
-
-// router.use('/users', usersRouter);
-
-// router.post('/test', (req, res) => {
-//     res.json({ requestBody: req.body });
 // });
 
 module.exports = router;
