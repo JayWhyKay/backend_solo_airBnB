@@ -39,7 +39,8 @@ const validateDuplicate = async (req, res, next) => {
 
     if(!exist.length) return next()
 
-    const err = new Error("User already has a review for this spot");
+    const err = new Error();
+    err.errors = ["User already has a review for this spot"]
     err.status = 403;
     return next(err);
 };
@@ -67,6 +68,7 @@ const validateReview = [
 
 
 router.get("/myreviews", requireAuth, async(req,res) => {
+    console.log('111111111111111111111',req.user.id)
     const Reviews = await Review.findAll({
         where: {
             userId: req.user.id
@@ -96,7 +98,7 @@ validateDuplicate, validateReview, async(req,res) => {
 
     const spot = await Spot.findByPk(req.params.spotId)
 
-    const { review, stars } = req.body
+    const { review, stars, imageURL } = req.body
 
     const newReview = await Review.create({
         userId: req.user.id,
@@ -104,17 +106,27 @@ validateDuplicate, validateReview, async(req,res) => {
         review,
         stars
     });
+    await ReviewImage.create({
+        reviewId: newReview.id,
+        url: imageURL
+    })
     res.json(newReview);
 });
 
 router.patch("/myreviews/:reviewId", requireAuth, validateListing, validateAuthorization, validateReview, async(req,res) => {
-    const { review, stars } = req.body
+    const { review, stars, imageURL } = req.body
 
     const reviewUpdate = await Review.findByPk(req.params.reviewId)
     await reviewUpdate.update({
         review,
         stars
     });
+
+    const images = await ReviewImage.findAll({where: {reviewId: reviewUpdate.id}})
+    await images[0].update({
+      url: imageURL,
+    })
+
     res.json(reviewUpdate);
 });
 
