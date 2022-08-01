@@ -59,6 +59,33 @@ module.exports = {
       },
       { spotId: 3,
         url: 'https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGJhdGhyb29tfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+      },
+      { spotId: 4,
+        url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+      },
+      { spotId: 4,
+        url: 'https://media.istockphoto.com/photos/interior-and-exterior-design-of-pool-villa-with-swimming-pool-picture-id918342482?k=20&m=918342482&s=170667a&w=0&h=59LgUC91MXY2mI6gLzUlZ2LQVFFa9PFhhPcfxLd8Sqk='
+      },
+      { spotId: 5,
+        url: 'https://images.unsplash.com/photo-1508330570239-ce7cabceee22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw0OTcyNTAzfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=300&q=60'
+      },
+      { spotId: 5,
+        url: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+      },
+      { spotId: 5,
+        url: 'https://images.unsplash.com/photo-1600047508788-786f3865b4b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+      },
+      { spotId: 5,
+        url: 'https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=300&q=60'
+      },
+      { spotId: 5,
+        url: 'https://images.unsplash.com/photo-1600566752229-250ed79470f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=300&q=60'
+      },
+      { spotId: 6,
+        url: 'https://images.unsplash.com/photo-1600585153490-76fb20a32601?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=300&q=60'
+      },
+      { spotId: 6,
+        url: 'https://images.unsplash.com/photo-1604014238312-ccb88904fa7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=300&q=60'
       }
       ], {});
   },
