@@ -1,18 +1,18 @@
 import { useParams } from 'react-router-dom';
-import UserBookingList from "./UserBookingList";
-import './ManageBookingList.css';
+import UserBookings from "./UserBookings";
+import './BookingLanding.css';
 
-function ManageBookingList() {
+function BookingLanding() {
     const { id } = useParams();
 
     return (
         <div className='user-trip-list'>
             <h1>Trips</h1>
             <div className='user-booking-list-container'>
-                <UserBookingList userId={id} />
+                <UserBookings userId={id} />
             </div>
         </div>
     );
 }
 
-export default ManageBookingList;
+export default BookingLanding;

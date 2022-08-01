@@ -10,7 +10,6 @@ const router = express.Router();
 
 const validateAuthorization = async (req, res, next) => {
     const exists = await Review.findByPk(req.params.reviewId)
-    console.log(exists)
 
     if(exists.userId == req.user.id) return next()
 
@@ -23,7 +22,6 @@ const validateAuthorization = async (req, res, next) => {
 const validateImageOwner = async (req, res, next) => {
     const revImg = await ReviewImage.findByPk(req.params.id)
     const review = await Review.findByPk(revImg.reviewId)
-    console.log(revImg)
 
     if(review.userId == req.user.id) return next()
 
@@ -44,7 +42,7 @@ const validateImage = async (req, res, next) => {
 
 const validateLimit = async (req, res, next) => {
     const exists = await ReviewImage.findAll({where:{reviewId: req.params.reviewId}});
-    console.log('asdfasdf', exists.length)
+
     if(exists.length < 10) return next()
 
     const err = new Error("Maximum number of images for this resource was reached");

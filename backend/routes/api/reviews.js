@@ -68,7 +68,7 @@ const validateReview = [
 
 
 router.get("/myreviews", requireAuth, async(req,res) => {
-    console.log('111111111111111111111',req.user.id)
+
     const Reviews = await Review.findAll({
         where: {
             userId: req.user.id

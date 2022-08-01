@@ -17,7 +17,7 @@ function SpotForm({ spotId, onClose, type }) {
   const [description, setDescription] = useState(
     editSpot ? editSpot.description : ""
   );
-  console.log(editSpot)
+
   const [price, setPrice] = useState(editSpot ? editSpot.price : "");
   const [errors, setErrors] = useState([]);
 

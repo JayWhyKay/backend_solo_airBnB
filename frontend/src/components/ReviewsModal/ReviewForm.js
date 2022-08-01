@@ -37,7 +37,6 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
         .then(() => onClose())
         .catch(async (res) => {
           const data = await res.json();
-          console.log(data)
           if (data) setErrors(Object.values((data.errors)));
         })
         .then(() => dispatch(getSpotById(spotId)))

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import ImageForm from './ImageForm';
-import './ImageFormMl.css';
+import './ImageModal.css';
 
-function ImageFormModal({ id }) {
+function ImageModal({ id }) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -20,4 +20,4 @@ function ImageFormModal({ id }) {
     );
 }
 
-export default ImageFormModal;
+export default ImageModal;

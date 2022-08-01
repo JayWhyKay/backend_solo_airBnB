@@ -39,7 +39,6 @@ const validateImage = async (req, res, next) => {
 const validateImageOwner = async (req, res, next) => {
     const spotImg = await SpotsImage.findByPk(req.params.id)
     const spot = await Spot.findByPk(spotImg.spotId)
-    console.log(spot)
 
     if(spot.ownerId == req.user.id) return next()
 

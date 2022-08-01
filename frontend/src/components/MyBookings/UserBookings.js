@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './UserBookingList.css';
+import './UserBookings.css';
 import { loadUserBookings } from '../../store/bookings';
 
-function UserBookingList({ userId }) {
+function UserBookings({ userId }) {
     const dispatch = useDispatch();
     const bookings = useSelector(state => Object.values(state.bookings));
     const userBookings = bookings.filter(booking => booking.userId === +userId)
@@ -39,4 +39,4 @@ function UserBookingList({ userId }) {
     );
 }
 
-export default UserBookingList;
+export default UserBookings;

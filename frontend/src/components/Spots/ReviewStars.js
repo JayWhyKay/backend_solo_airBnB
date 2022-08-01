@@ -5,7 +5,6 @@ import { getSpotReviews } from '../../store/reviews'
 function ReviewStars({spotId}) {
   const dispatch = useDispatch()
   const results = useSelector(state => Object.values(state.reviews));
-  console.log(results)
   const reviews = results.filter(review => review.spotId === Number(spotId));
 
   useEffect(() => {

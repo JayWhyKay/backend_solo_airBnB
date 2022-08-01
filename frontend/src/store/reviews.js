@@ -43,7 +43,6 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 export const getMyReviews = () => async (dispatch) => {
   const response = await csrfFetch("/api/reviews/myreviews");
   const data = await response.json();
-  console.log(data)
   dispatch(loadR(data.Reviews));
   return response;
 };

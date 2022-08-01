@@ -59,7 +59,6 @@ export const getSpots = () => async (dispatch) => {
 export const getMySpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/listings/mylistings");
   const data = await response.json();
-  console.log(data);
   dispatch(loadMyS(data.Spots));
   return response;
 };

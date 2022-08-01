@@ -11,7 +11,6 @@ function SpotByID() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { spotId } = useParams();
   const spots = useSelector((state) => state.spots[+spotId]);
-  // console.log(spots.avgStarRating)
 
   useEffect(() => {
     dispatch(getSpotById(spotId)).then(() => setIsLoaded(true));
