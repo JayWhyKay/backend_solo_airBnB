@@ -21,7 +21,7 @@ function Reviews({ spotId }) {
   return (
     <div className="all__reviews__container">
       {isLoaded &&
-        reviews.map((review) => {
+        reviews.slice(0,6).map((review) => {
           return (
             <div key={`review` + review.id} className="review_container">
               <div className="review_container__header">
