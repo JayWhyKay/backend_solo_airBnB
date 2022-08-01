@@ -4,7 +4,7 @@ import SignupForm from './SignupForm';
 import './SignupFormModal.css'
 
 function SignupFormModal() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState();
 
   return (
     <>
