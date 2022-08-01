@@ -15,13 +15,14 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
   const editReview = useSelector((state) => state.reviews[reviewId]);
   const [stars, setStars] = useState(editReview ? editReview.stars : 5);
   const [review, setReview] = useState(editReview ? editReview.review : "");
+  const [imageURL, setImageURL] = useState(editReview ? editReview.review : "");
   const [focus, setFocus] = useState(null);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    const reviewData = { stars, review };
+    const reviewData = { stars, review, imageURL };
 
     if (reviewId) {
       dispatch(updateReview(reviewId, reviewData))
@@ -36,10 +37,11 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
         .then(() => onClose())
         .catch(async (res) => {
           const data = await res.json();
-          if (data) setErrors(([data.message]));
+          console.log(data)
+          if (data) setErrors(Object.values((data.errors)));
         })
-        .then(() => dispatch(getSpotReviews(spotId)))
-        .then(() => dispatch(getSpotById(spotId)));
+        .then(() => dispatch(getSpotById(spotId)))
+        .then(() => dispatch(getSpotReviews(spotId)));
     }
   };
   return (
@@ -67,6 +69,15 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
             focus={focus}
           />
         </div>
+        <div className="review_image__container">
+          <label>Image url</label>
+          <input
+            type="text"
+            value={imageURL}
+            maxLength="250"
+            onChange={(e) => setImageURL(e.target.value)}
+          />
+        </div>
         <div className="review_text_container">
           <label>
             Tell us more about your experience:
@@ -78,7 +89,7 @@ function ReviewForm({ type, onClose, spotId, reviewId }) {
             />
           </label>
         </div>
-        <div>
+        <div className="review__form__button__container">
           <button className="review__form__button" type="submit">Submit</button>
         </div>
       </form>

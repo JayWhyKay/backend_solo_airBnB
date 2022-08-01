@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyReviews, removeReview } from "../../store/reviews";
+import { getSpots } from "../../store/spots";
 import ReviewModal from "../ReviewsModal";
 import './MySpotsReviews.css'
 
@@ -22,7 +23,9 @@ function MySpotsReviews() {
   };
 
   const handleDelete = (reviewId) => {
-    dispatch(removeReview(reviewId)).then(() => dispatch(getMyReviews()));
+    dispatch(removeReview(reviewId))
+      .then(() => dispatch(getMyReviews()))
+      .then(() => dispatch(getSpots()));
   };
 
   return (

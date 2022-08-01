@@ -4,15 +4,18 @@
   align-items: center;
   position: sticky;
   top: 0;
-  padding-top: 5px;
+  height: 70px;
+  padding: 1px 0px;
   background-color: white;
-  z-index: 100;
+  border-bottom: 1px solid rgba(211,211,211, 0.8);
+  z-index: 1;
   width: 100%;
 }
 
 .logo__container {
   display: flex;
   align-items: center;
+  margin-left: 50px;
 }
 
 .profile__container {
@@ -22,6 +25,12 @@
   width: 15vw;
   margin-right: 50px;
 }
+.profile__container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .search__container {
   display: flex;
@@ -29,7 +38,7 @@
   align-items: center;
   max-width: fit-content;
   height: 30px;
-  width: 300px;
+  width: 250px;
   padding: 10px;
   border: 1px solid lightgray;
   border-radius: 999px;
@@ -60,7 +69,6 @@
 
 .fa-solid.fa-otter.fa-2x {
   object-fit: contain;
-  margin-left: 60px;
   color: #ff5a5f;
 }
 

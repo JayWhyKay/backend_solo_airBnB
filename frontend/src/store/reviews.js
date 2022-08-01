@@ -43,6 +43,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 export const getMyReviews = () => async (dispatch) => {
   const response = await csrfFetch("/reviews/myreviews");
   const data = await response.json();
+  console.log(data)
   dispatch(loadR(data.Reviews));
   return response;
 };
@@ -60,7 +61,7 @@ export const addReview = (spotId, reviewData) => async (dispatch) => {
 };
 
 export const updateReview = (reviewId, reviewData) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/${reviewId}`, {
+  const response = await csrfFetch(`/reviews/myreviews/${reviewId}`, {
     method: "PATCH",
     headers: { CONTENT_TYPE: "application/json" },
     body: JSON.stringify(reviewData),
@@ -71,12 +72,10 @@ export const updateReview = (reviewId, reviewData) => async (dispatch) => {
 };
 
 export const removeReview = (reviewId) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/${reviewId}`, {
+  const response = await csrfFetch(`/reviews/myreviews/${reviewId}`, {
     method: "DELETE",
   });
-  if (response.ok) {
     dispatch(deleteR(reviewId));
-  }
   return response;
 };
 
@@ -100,7 +99,7 @@ const reviewsReducer = (state = initialState, action) => {
       return newState;
     case DELETE_REVIEW:
       newState = Object.assign({}, state);
-      newState[action.payload] = null;
+      delete newState[action.payload];
       return newState;
     default:
       return state;

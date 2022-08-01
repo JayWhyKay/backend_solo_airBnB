@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
 import "./Spots.css";
+import ReviewStars from "./ReviewStars";
 
 export default function Spots() {
   const history = useHistory();
@@ -39,6 +40,7 @@ export default function Spots() {
 
               <span className="cityText">
                 {spot.city}, {spot.state}
+                <ReviewStars spotId={spot.id} />
               </span>
               <div className="priceOut">
                 <span className="price">${spot.price}</span> night

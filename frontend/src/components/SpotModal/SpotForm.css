@@ -1,7 +1,19 @@
 .spots__form {
+  height: 430px;
   width: 400px;
   border-radius: 15px;
   padding: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.spots__form::-webkit-scrollbar {
+  display: none;
+}
+
+.spots__form {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .spots_form__title{

@@ -182,7 +182,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 10rem;
+  width: 12rem;
 }
 
 .review_byId_header > div > span + span {

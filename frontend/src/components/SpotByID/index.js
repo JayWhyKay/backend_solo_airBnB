@@ -24,7 +24,7 @@ function SpotByID() {
           <h1>{spots.name}</h1>
           <div className="spotByID_details">
             <i className="fa-solid fa-star"></i>
-            <span> {spots.avgStarRating}</span>
+            <span> {spots.avgStarRating ? spots.avgStarRating : "New" }</span>
             <span>{` · `}</span>
             <span>{spots.numReviews} reviews</span>
             <span>{` · `}</span>
@@ -100,7 +100,7 @@ function SpotByID() {
           <div className="review_byId_header">
             <div>
               <i className="fa-solid fa-star"></i>
-              <span>{spots.avgStarRating}</span>
+              <span>{spots.avgStarRating ? spots.avgStarRating : "New"}</span>
               <span>{` · `}</span>
               <div>{`${spots.numReviews} reviews`}</div>
             </div>

@@ -13,9 +13,11 @@ function SpotForm({ spotId, onClose, type }) {
   const [lat, setLat] = useState(editSpot ? editSpot.lat : "");
   const [lng, setLng] = useState(editSpot ? editSpot.lng : "");
   const [name, setName] = useState(editSpot ? editSpot.name : "");
+  const [imageURL, setImageURL] = useState(editSpot ? editSpot.previewImage[0].url : "");
   const [description, setDescription] = useState(
     editSpot ? editSpot.description : ""
   );
+  console.log(editSpot)
   const [price, setPrice] = useState(editSpot ? editSpot.price : "");
   const [errors, setErrors] = useState([]);
 
@@ -32,6 +34,7 @@ function SpotForm({ spotId, onClose, type }) {
       name,
       description,
       price,
+      imageURL,
     };
 
     if (spotId) {
@@ -152,18 +155,15 @@ function SpotForm({ spotId, onClose, type }) {
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        {/* <div className="form-element">
-        <label>
-          Image url
+        <div className="form-element">
+          <label>Image url</label>
           <input
             type="text"
-            value={previewImage}
+            value={imageURL}
             maxLength="250"
-            onChange={(e) => setPreviewImage(e.target.value)}
-            required
+            onChange={(e) => setImageURL(e.target.value)}
           />
-        </label>
-      </div> */}
+        </div>
         <div className="form-element__submit">
           <button type="submit">Submit</button>
         </div>

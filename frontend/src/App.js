@@ -32,6 +32,9 @@ function App() {
           <Route path="/user/my-reviews">
             <MyReviews />
           </Route>
+          <Route>
+            Sorry resource not found. Please check url
+          </Route>
         </Switch>
       <Footer />
     </>
